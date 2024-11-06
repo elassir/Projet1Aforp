@@ -1,0 +1,18 @@
+digraph UML_no_user {
+	rankdir=BT
+	node [fontname=Helvetica fontsize=12 shape=record]
+	Projet [label="{
+    Projet |
+    + ID: int \l+ Nom: string \l+ Description: string \l+ DateDébut: date \l+ DateFinPrévue: date \l+ Statut: string \l+ Phase: string \l+ Versions: list\l
+}"]
+	Version [label="{
+    Version |
+    + ID: int \l+ Numéro: string \l+ DateSortiePrévue: date \l+ Statut: string \l+ Jalons: list\l
+}"]
+	Jalon [label="{
+    Jalon |
+    + ID: int \l+ Nom: string \l+ DateDébut: date \l+ DateFinPrévue: date \l+ Statut: string \l
+}"]
+	Projet -> Version [label="1..*"]
+	Version -> Jalon [label="1..*"]
+}
