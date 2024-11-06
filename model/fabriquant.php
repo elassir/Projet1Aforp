@@ -5,7 +5,7 @@ class Fabriquant {
     private $tel;
     private $adresse;
 
-    public function __construct($nom, $tel, $adresse, $siret = null) {
+    public function __construct($nom, $tel, $adresse, $siret ) {
         $this->nom = $nom;
         $this->tel = $tel;
         $this->siret = $siret;

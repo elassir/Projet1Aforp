@@ -1,7 +1,10 @@
 <?php
 // views/gestion_systemes.php
 include_once '../controlleur/connexion.php';
-include_once '../model/systemeRepository.php';
+include_once '../model/SystemeRepository.php';
+include_once '../model/fabriquant.php';
+include_once '../model/fabriquantRepository.php'; // Assurez-vous que ce chemin est correct
+
 // Affiche les messages de succès ou d'erreur, le cas échéant
 if (isset($message)) {
     echo "<p class='message'>$message</p>";
@@ -24,81 +27,65 @@ if (isset($message)) {
 
         // Affiche ou masque la modale pour les détails du système
         function openSystemModal(id_systeme) {
-           
             document.getElementById(`modal-${id_systeme}`).style.display = 'block';
         }
-        
+
         function closeSystemModal(id_systeme) {
-            
             document.getElementById(`modal-${id_systeme}`).style.display = 'none';
         }
     </script>
 </head>
 <body>
     <h1>Gestion des Systèmes</h1>
-
     <!-- Bouton pour afficher le formulaire d'ajout de système -->
     <button onclick="toggleAddSystemSection()" class="add-button">Ajouter un Système</button>
-
     <!-- Formulaire d'ajout de système masqué par défaut -->
     <section id="ajout-systeme" style="display: none;">
         <h2>Ajouter un Nouveau Système</h2>
         <form action="../controlleur/enregistrerSysteme.php" method="POST" enctype="multipart/form-data">
             <label for="Nom">Nom du système :</label>
             <input type="text" id="Nom" name="Nom" required>
-
             <label for="date_derniere_mise_a_jour">Date de dernière mise à jour :</label>
-            <input type="date" id="date_mise_a_jour" name="date_mise_a_jour" required>
-
+            <input type="date" id="date_derniere_mise_a_jour" name="date_derniere_mise_a_jour" required>
             <label for="image_systeme">Image du système :</label>
             <input type="file" id="image_systeme" name="image_systeme" accept="image/*" >
-
             <label for="Numero_de_serie">Numéro de série :</label>
             <input type="text" id="Numero_de_serie" name="Numero_de_serie" required>
-
             <label for="Fabriquant">Fabriquant :</label>
             <input type="text" id="Fabriquant" name="Fabriquant" required>
-
             <label for="Date_fabrication">Date de fabrication :</label>
             <input type="Date" id="Date_fabrication" name="Date_fabrication" required>
-
             <label for="Description">Description :</label>
             <textarea id="Description" name="Description" rows="4" required></textarea>
-
             <button type="submit">Ajouter le Système</button>
         </form>
     </section>
-
-
     <!-- Liste des systèmes existants -->
     <section id="liste-systemes">
         <h2>Liste des Systèmes</h2>
-        
         <div class="systemes-container">
             <?php
-             
             $systemeRepository = new SystemeRepository($pdo);
             $systemes = $systemeRepository->findAll();
-            
-            foreach ($systemes as $systeme): ?>
+            $fabriquantRepository = new FabriquantRepository($pdo);
+
+            foreach ($systemes as $systeme):
+                $fabriquant = $fabriquantRepository->findBySiret($systeme->getFabriquant());
+            ?>
                 <div class="systeme-card">
                     <h3><?= htmlspecialchars($systeme->getNomDuSysteme()); ?></h3>
-
                     <!-- Image du système avec lien pour ouvrir la modale de détails -->
                     <img src="../uploads/<?= htmlspecialchars($systeme->getImageSysteme()); ?>" alt="<?= htmlspecialchars($systeme->getNomDuSysteme()); ?>" class="systeme-image" onclick="openSystemModal(<?= $systeme->getIdSysteme(); ?>)">
-
                     <p><strong>Numéro de série :</strong> <?= htmlspecialchars($systeme->getNumeroDeSerie()); ?></p>
-
-                    <!-- Modale pour afficher les versions et les infos du fournisseur -->
+                    <!-- Modale pour afficher les détails du système -->
                     <div id="modal-<?= $systeme->getIdSysteme(); ?>" class="modal">
                         <div class="modal-content">
                             <span class="close" onclick="closeSystemModal(<?= $systeme->getIdSysteme(); ?>)">&times;</span>
                             <h3>Détails du système : <?= htmlspecialchars($systeme->getNomDuSysteme()); ?></h3>
-                            <p><strong>Fabriquant :</strong> <?= htmlspecialchars($systeme->getFabriquant()); ?></p>
-                             <p><strong>Versions :</strong></p>
-                            
-                            
-                            
+                            <p><strong>Fabriquant :</strong> <?= htmlspecialchars($fabriquant->getNom()); ?></p>
+                            <p><strong>Date de fabrication :</strong> <?= htmlspecialchars($systeme->getDateFabrication()); ?></p>
+                            <p><strong>Tel :</strong> <?= htmlspecialchars($fabriquant->getTel()); ?></p>
+                            <p><strong>Adresse :</strong> <?= htmlspecialchars($fabriquant->getAdresse()); ?></p>
                         </div>
                     </div>
                 </div>
