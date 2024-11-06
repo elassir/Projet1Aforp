@@ -86,6 +86,7 @@ if (isset($message)) {
                             <p><strong>Date de fabrication :</strong> <?= htmlspecialchars($systeme->getDateFabrication()); ?></p>
                             <p><strong>Tel :</strong> <?= htmlspecialchars($fabriquant->getTel()); ?></p>
                             <p><strong>Adresse :</strong> <?= htmlspecialchars($fabriquant->getAdresse()); ?></p>
+                            <button href ="#"></button> Document technique</button> 
                         </div>
                     </div>
                 </div>
