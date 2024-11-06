@@ -65,7 +65,8 @@ class SystemeRepository {
                 $row['Numero_de_serie'],
                 $row['Fabriquant'],
                 $row['Date_fabrication'],
-                $row['Description']
+                $row['Description'],
+                $row['id_systeme']
             );
         }
         return $systemes;

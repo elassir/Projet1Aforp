@@ -9,9 +9,9 @@ class Systeme {
     public $Date_fabrication;
     public $Description;
 
-    public function __construct($Nom_du_systeme, $date_derniere_mise_a_jour, $image_systeme, $Numero_de_serie, $Fabriquant, $Date_fabrication, $Description) {
+    public function __construct($Nom_du_systeme, $date_derniere_mise_a_jour, $image_systeme, $Numero_de_serie, $Fabriquant, $Date_fabrication, $Description, $id_systeme = null) {
         $this->Nom_du_systeme = $Nom_du_systeme;
-        //$this->id_systeme = $id_systeme;
+        $this->id_systeme = $id_systeme;
         $this->date_derniere_mise_a_jour = $date_derniere_mise_a_jour;
         $this->image_systeme = $image_systeme;
         $this->Numero_de_serie = $Numero_de_serie;
@@ -55,7 +55,7 @@ class Systeme {
 
     // Setters
     public function setNomDuSysteme( $Nom_du_systeme){
-        $this->nom_du_systeme = $Nom_du_systeme;
+        $this->Nom_du_systeme = $Nom_du_systeme;
     }
 
     public function setDateDerniereMiseAJour($date_derniere_mise_a_jour) {
@@ -67,19 +67,19 @@ class Systeme {
     }
 
     public function setNumeroDeSerie($Numero_de_serie) {
-        $this->numero_de_serie = $Numero_de_serie;
+        $this->Numero_de_serie = $Numero_de_serie;
     }
 
     public function setFabriquant($Fabriquant){
-        $this->fabriquant = $Fabriquant;
+        $this->Fabriquant = $Fabriquant;
     }
 
     public function setDateFabrication($Date_fabrication){
-        $this->date_fabrication = $Date_fabrication;
+        $this->Date_fabrication = $Date_fabrication;
     }
 
     public function setDescription( $Description){
-        $this->description = $Description;
+        $this->Description = $Description;
     }
 
     public function setIdSysteme(?int $id_systeme) {

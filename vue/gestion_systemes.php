@@ -23,12 +23,14 @@ if (isset($message)) {
         }
 
         // Affiche ou masque la modale pour les détails du système
-        function openSystemModal(systemId) {
-            document.getElementById(`modal-${systemId}`).style.display = 'block';
+        function openSystemModal(id_systeme) {
+           
+            document.getElementById(`modal-${id_systeme}`).style.display = 'block';
         }
         
-        function closeSystemModal(systemId) {
-            document.getElementById(`modal-${systemId}`).style.display = 'none';
+        function closeSystemModal(id_systeme) {
+            
+            document.getElementById(`modal-${id_systeme}`).style.display = 'none';
         }
     </script>
 </head>
@@ -77,7 +79,7 @@ if (isset($message)) {
              
             $systemeRepository = new SystemeRepository($pdo);
             $systemes = $systemeRepository->findAll();
-            print_r($systemes);
+            
             foreach ($systemes as $systeme): ?>
                 <div class="systeme-card">
                     <h3><?= htmlspecialchars($systeme->getNomDuSysteme()); ?></h3>
@@ -94,15 +96,8 @@ if (isset($message)) {
                             <h3>Détails du système : <?= htmlspecialchars($systeme->getNomDuSysteme()); ?></h3>
                             <p><strong>Fabriquant :</strong> <?= htmlspecialchars($systeme->getFabriquant()); ?></p>
                              <p><strong>Versions :</strong></p>
-                            <ul>
-                                <?php foreach ($systeme->getVersions() as $version): ?>
-                                    <li><?= htmlspecialchars($version->getNumeroVersion()) ?> - <?= htmlspecialchars($version->getDateSortie()) ?></li>
-                                <?php endforeach; ?>
-                            </ul> 
-                            <p><strong>Informations du fournisseur :</strong></p>
-                            <p>Nom : <?= htmlspecialchars($fournisseurInfo->getNom()) ?></p>
-                            <p>Tel : <?= htmlspecialchars($fournisseurInfo->getTel()) ?></p>
-                            <p>Email : <?= htmlspecialchars($fournisseurInfo->getEmail()) ?></p>
+                            
+                            
                             
                         </div>
                     </div>
