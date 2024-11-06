@@ -101,6 +101,8 @@ if (isset($message)) {
                             </ul> 
                             <p><strong>Informations du fournisseur :</strong></p>
                             <p>Nom : <?= htmlspecialchars($fournisseurInfo->getNom()) ?></p>
+                            <p>Tel : <?= htmlspecialchars($fournisseurInfo->getTel()) ?></p>
+                            <p>Email : <?= htmlspecialchars($fournisseurInfo->getEmail()) ?></p>
                             
                         </div>
                     </div>
