@@ -1,8 +1,8 @@
 <?php
 
-include_once 'projet1.1%20copy/model/DocumentTechnique.php';
-include_once 'projet1.1%20copy/model/DocumentTechniqueRepository.php';
-include_once 'projet1.1%20copy/controlleur/connexion.php';
+include_once '../controlleur/connexion.php';
+include_once '../model/DocumentTechnique.php';
+include_once '../model/DocumentTechniqueRepository.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $Nom_doc_tech = $_POST['Nom_doc_tech'];
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $doc_file_path = null;
     if ($Doc_file && $Doc_file['error'] == 0) {
-        $target_dir = "uploads/";
+        $target_dir = "../uploads/";
         $target_file = $target_dir . basename($Doc_file['name']);
         if (move_uploaded_file($Doc_file['tmp_name'], $target_file)) {
             $doc_file_path = basename($Doc_file['name']);
