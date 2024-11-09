@@ -17,7 +17,7 @@ if (isset($message)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des Documents Techniques</title>
-    <link rel="stylesheet" href="/projet1.1 copy/vue/styles.css">
+    <link rel="stylesheet" href="/projet1.1 copy/vue/gestion_doc.css">
 </head>
 <body>
     <h1>Gestion des Documents Techniques</h1>
@@ -49,6 +49,7 @@ if (isset($message)) {
             $documents = $documentTechniqueRepository->findAll();
             foreach ($documents as $document): ?>
                 <div class="doc-technique-card">
+                    <img src="/path/to/file-icon.png" alt="File Icon">
                     <h3><?= htmlspecialchars($document->getNom_doc_tech()); ?></h3>
                     <p><strong>Date :</strong> <?= htmlspecialchars($document->getDate()); ?></p>
                     <p><strong>Catégorie :</strong> <?= htmlspecialchars($document->getCategorie()); ?></p>

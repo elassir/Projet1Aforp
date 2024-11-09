@@ -23,7 +23,7 @@ class DocumentTechniqueRepository {
                 ]);
                 $documentTechnique->setid_Technique($this->pdo->lastInsertId());
             } else {
-                $stmt = $this->pdo->prepare("UPDATE document_technique SET Nom_doc_tech = ?, Date = ?, Categorie = ?, Systeme_concerne = ?, Doc_file = ?, Version = ? WHERE id_technique = ?");
+                $stmt = $this->pdo->prepare("UPDATE document_technique SET Nom_doc_tech = ?, Date = ?, Categorie = ?, Systeme_concerne = ?, Doc_file = ?, Version = ? WHERE id_document = ?");
                 $stmt->execute([
                     $documentTechnique->getNom_doc_tech(),
                     $documentTechnique->getDate(),
@@ -52,14 +52,14 @@ class DocumentTechniqueRepository {
                 $row['Systeme_concerne'],
                 $row['Doc_file'],
                 $row['Version'],
-                $row['id_technique']
+                $row['id_document']
             );
         }
         return $documents;
     }
 
     public function findById($id_technique) {
-        $stmt = $this->pdo->prepare("SELECT * FROM document_technique WHERE id_technique = ?");
+        $stmt = $this->pdo->prepare("SELECT * FROM document_technique WHERE id_document = ?");
         $stmt->execute([$id_technique]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($row == null) {
@@ -72,7 +72,7 @@ class DocumentTechniqueRepository {
             $row['Systeme_concerne'],
             $row['Doc_file'],
             $row['Version'],
-            $row['id_technique']
+            $row['id_document']
         );
     }
 
@@ -88,7 +88,7 @@ class DocumentTechniqueRepository {
                 $row['Systeme_concerne'],
                 $row['Doc_file'],
                 $row['Version'],
-                $row['id_technique']
+                $row['id_document']
             );
         }
         return $documents;
