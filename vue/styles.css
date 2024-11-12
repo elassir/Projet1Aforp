@@ -250,3 +250,18 @@ form button:hover {
 .tabcontent.show {
     display: block;
 }
+
+/* Bouton Document Technique */
+.doc-technique-button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+.doc-technique-button:hover {
+    background-color: #2980b9;
+}

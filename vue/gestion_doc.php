@@ -5,6 +5,8 @@ include_once '../model/DocumentTechnique.php';
 include_once '../model/DocumentTechniqueRepository.php';
 include_once '../controlleur/enregistrerDocTec.php'; // Assurez-vous que ce chemin est correct
 
+$systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne'] : null;
+
 // Affiche les messages de succès ou d'erreur, le cas échéant
 if (isset($message)) {
     echo "<p class='message'>$message</p>";
@@ -60,15 +62,18 @@ if (isset($message)) {
         <div class="docs-techniques-container">
             <?php
             $documentTechniqueRepository = new DocumentTechniqueRepository($pdo);
-            $documents = $documentTechniqueRepository->findAll();
+            if ($systeme_concerne) {
+                $documents = $documentTechniqueRepository->findBySysteme($systeme_concerne);
+            } else {
+                $documents = $documentTechniqueRepository->findAll();
+            }
             // Trier les documents par catégorie
             $categories = [
                 'Presentation' => [],
                 'Annexes' => [],
                 'Notices' => [],
                 'Schema technique' => []
-                
- ];
+            ];
             foreach ($documents as $document) {
                 $categories[$document->getCategorie()][] = $document;
             }
@@ -81,9 +86,9 @@ if (isset($message)) {
                             <div class="doc-technique-card">
                                 <h4><?= htmlspecialchars($doc->getNom_doc_tech()); ?></h4>
                                 <p><strong>Date :</strong> <?= htmlspecialchars($doc->getDate()); ?></p>
-                                <p><strong>Système concerné :</strong> <?= htmlspecialchars($doc->getSysteme_concerne()); ?></p>
+                                
                                 <p><strong>Version :</strong> <?= htmlspecialchars($doc->getVersion()); ?></p>
-                                <a href="../uploads/<?= htmlspecialchars($doc->getDocFile()); ?>" target="_blank">Voir le document</a>
+                                <a href="../uploads/<?= htmlspecialchars($doc->getDocFile()); ?>" target="_self">Voir le document</a>
                             </div>
                         <?php endforeach; ?>
                     </div>
