@@ -265,3 +265,18 @@ form button:hover {
 .doc-technique-button:hover {
     background-color: #2980b9;
 }
+
+/* Bouton Document Pédagogique */
+.doc-pedago-button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+.doc-pedago-button:hover {
+    background-color: #2980b9;
+}

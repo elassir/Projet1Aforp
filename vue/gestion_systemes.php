@@ -68,7 +68,6 @@ if (isset($message)) {
             $systemeRepository = new SystemeRepository($pdo);
             $systemes = $systemeRepository->findAll();
             $fabriquantRepository = new FabriquantRepository($pdo);
-
             foreach ($systemes as $systeme):
                 $fabriquant = $fabriquantRepository->findBySiret($systeme->getFabriquant());
             ?>
@@ -87,6 +86,7 @@ if (isset($message)) {
                             <p><strong>Tel :</strong> <?= htmlspecialchars($fabriquant->getTel()); ?></p>
                             <p><strong>Adresse :</strong> <?= htmlspecialchars($fabriquant->getAdresse()); ?></p>
                             <button class="doc-technique-button" onclick="window.location.href='../vue/gestion_doc.php?systeme_concerne=<?= $systeme->getIdSysteme(); ?>'">Document technique</button>
+                            <button class="doc-pedago-button" onclick="window.location.href='../vue/gestion_docPedago.php?systeme_concerne=<?= $systeme->getIdSysteme(); ?>'">Document pédagogique</button>
                         </div>
                     </div>
                 </div>
