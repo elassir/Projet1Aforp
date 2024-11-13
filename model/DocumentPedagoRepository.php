@@ -12,23 +12,23 @@ class DocumentPedagoRepository {
         try {
             $this->pdo->beginTransaction();
             if ($documentPedago->getIdPedagogique() == null) {
-                $stmt = $this->pdo->prepare("INSERT INTO document_pedagogique (Nom_matiere, Systeme_concerne, Date_Document, Type_document, Doc_file) VALUES (?, ?, ?, ?, ?)");
+                $stmt = $this->pdo->prepare("INSERT INTO document_pedagogique (Systeme_concerne, Date_Document, Type_document, Doc_file, id_matiere) VALUES (?, ?, ?, ?, ?)");
                 $stmt->execute([
-                    $documentPedago->getNomMatiere(),
-                    $documentPedago->getSystemeConcerne(),
-                    $documentPedago->getDateDocument(),
-                    $documentPedago->getTypeDocument(),
-                    $documentPedago->getDocFile()
-                ]);
-                $documentPedago->setIdPedagogique($this->pdo->lastInsertId());
-            } else {
-                $stmt = $this->pdo->prepare("UPDATE document_pedagogique SET Nom_matiere = ?, Systeme_concerne = ?, Date_Document = ?, Type_document = ?, Doc_file = ? WHERE id_pedagogique = ?");
-                $stmt->execute([
-                    $documentPedago->getNomMatiere(),
                     $documentPedago->getSystemeConcerne(),
                     $documentPedago->getDateDocument(),
                     $documentPedago->getTypeDocument(),
                     $documentPedago->getDocFile(),
+                    $documentPedago->getIdMatiere()
+                ]);
+                $documentPedago->setIdPedagogique($this->pdo->lastInsertId());
+            } else {
+                $stmt = $this->pdo->prepare("UPDATE document_pedagogique SET Systeme_concerne = ?, Date_Document = ?, Type_document = ?, Doc_file = ?, id_matiere = ? WHERE id_pedagogique = ?");
+                $stmt->execute([
+                    $documentPedago->getSystemeConcerne(),
+                    $documentPedago->getDateDocument(),
+                    $documentPedago->getTypeDocument(),
+                    $documentPedago->getDocFile(),
+                    $documentPedago->getIdMatiere(),
                     $documentPedago->getIdPedagogique()
                 ]);
             }
@@ -44,12 +44,13 @@ class DocumentPedagoRepository {
         $documents = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $documents[] = new DocumentPedago(
-                $row['Nom_matiere'],
+                null, // Nom_matiere n'est plus utilisé
                 $row['Systeme_concerne'],
                 $row['Date_Document'],
                 $row['Type_document'],
                 $row['Doc_file'],
-                $row['id_pedagogique']
+                $row['id_pedagogique'],
+                $row['id_matiere']
             );
         }
         return $documents;
@@ -63,12 +64,13 @@ class DocumentPedagoRepository {
             return null;
         }
         return new DocumentPedago(
-            $row['Nom_matiere'],
+            null, // Nom_matiere n'est plus utilisé
             $row['Systeme_concerne'],
             $row['Date_Document'],
             $row['Type_document'],
             $row['Doc_file'],
-            $row['id_pedagogique']
+            $row['id_pedagogique'],
+            $row['id_matiere']
         );
     }
 
@@ -78,12 +80,13 @@ class DocumentPedagoRepository {
         $documents = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $documents[] = new DocumentPedago(
-                $row['Nom_matiere'],
+                null, // Nom_matiere n'est plus utilisé
                 $row['Systeme_concerne'],
                 $row['Date_Document'],
                 $row['Type_document'],
                 $row['Doc_file'],
-                $row['id_pedagogique']
+                $row['id_pedagogique'],
+                $row['id_matiere']
             );
         }
         return $documents;

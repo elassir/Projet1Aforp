@@ -2,6 +2,8 @@
 include_once '../controlleur/connexion.php';
 include_once '../model/DocumentPedago.php';
 include_once '../model/DocumentPedagoRepository.php';
+include_once '../model/Matiere.php';
+include_once '../model/MatiereRepository.php';
 include_once '../controlleur/enregistrerDocPedago.php';
 
 $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne'] : null;
@@ -30,8 +32,16 @@ $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne']
     <section id="ajout-doc-pedago" style="display: none;">
         <h2>Ajouter un Nouveau Document Pédagogique</h2>
         <form action="../controlleur/enregistrerDocPedago.php" method="POST" enctype="multipart/form-data">
-            <label for="Nom_matiere">Nom de la matière :</label>
-            <input type="text" id="Nom_matiere" name="Nom_matiere" required>
+            <label for="id_matiere">Matière :</label>
+            <select id="id_matiere" name="id_matiere" required>
+                <?php
+                $matiereRepository = new MatiereRepository($pdo);
+                $matieres = $matiereRepository->findAll();
+                foreach ($matieres as $matiere) {
+                    echo "<option value='{$matiere->getIdMatiere()}'>{$matiere->getNomMatiere()}</option>";
+                }
+                ?>
+            </select>
             <label for="Systeme_concerne">Système concerné :</label>
             <input type="text" id="Systeme_concerne" name="Systeme_concerne" required>
             <label for="Date_Document">Date du document :</label>
@@ -72,7 +82,7 @@ $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne']
                         <h3><?= htmlspecialchars($type); ?></h3>
                         <?php foreach ($docs as $doc): ?>
                             <div class="doc-technique-card">
-                                <h4><?= htmlspecialchars($doc->getNomMatiere()); ?></h4>
+                               
                                 <p><strong>Date :</strong> <?= htmlspecialchars($doc->getDateDocument()); ?></p>
                                 <p><strong>Système concerné :</strong> <?= htmlspecialchars($doc->getSystemeConcerne()); ?></p>
                                 <a href="../uploads/<?= htmlspecialchars($doc->getDocFile()); ?>" target="_self">Voir le document</a>

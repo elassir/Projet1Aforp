@@ -85,6 +85,7 @@ if (isset($message)) {
                             <p><strong>Date de fabrication :</strong> <?= htmlspecialchars($systeme->getDateFabrication()); ?></p>
                             <p><strong>Tel :</strong> <?= htmlspecialchars($fabriquant->getTel()); ?></p>
                             <p><strong>Adresse :</strong> <?= htmlspecialchars($fabriquant->getAdresse()); ?></p>
+                            <p><strong>Matiere : </strong> <?= htmlspecialchars($matiere ->getMatiere()); ?></p>
                             <button class="doc-technique-button" onclick="window.location.href='../vue/gestion_doc.php?systeme_concerne=<?= $systeme->getIdSysteme(); ?>'">Document technique</button>
                             <button class="doc-pedago-button" onclick="window.location.href='../vue/gestion_docPedago.php?systeme_concerne=<?= $systeme->getIdSysteme(); ?>'">Document pédagogique</button>
                         </div>

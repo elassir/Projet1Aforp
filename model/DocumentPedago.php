@@ -2,28 +2,24 @@
 
 class DocumentPedago {
     private $id_pedagogique;
-    private $Nom_matiere;
     private $Systeme_concerne;
     private $Date_Document;
     private $Type_document;
     private $Doc_file;
+    private $id_matiere;
 
-    public function __construct($Nom_matiere, $Systeme_concerne, $Date_Document, $Type_document, $Doc_file, $id_pedagogique = null) {
+    public function __construct($Nom_matiere, $Systeme_concerne, $Date_Document, $Type_document, $Doc_file, $id_pedagogique = null, $id_matiere = null) {
         $this->id_pedagogique = $id_pedagogique;
-        $this->Nom_matiere = $Nom_matiere;
         $this->Systeme_concerne = $Systeme_concerne;
         $this->Date_Document = $Date_Document;
         $this->Type_document = $Type_document;
         $this->Doc_file = $Doc_file;
+        $this->id_matiere = $id_matiere;
     }
 
     // Getters
     public function getIdPedagogique() {
         return $this->id_pedagogique;
-    }
-
-    public function getNomMatiere() {
-        return $this->Nom_matiere;
     }
 
     public function getSystemeConcerne() {
@@ -42,13 +38,13 @@ class DocumentPedago {
         return $this->Doc_file;
     }
 
+    public function getIdMatiere() {
+        return $this->id_matiere;
+    }
+
     // Setters
     public function setIdPedagogique($id_pedagogique) {
         $this->id_pedagogique = $id_pedagogique;
-    }
-
-    public function setNomMatiere($Nom_matiere) {
-        $this->Nom_matiere = $Nom_matiere;
     }
 
     public function setSystemeConcerne($Systeme_concerne) {
@@ -65,6 +61,10 @@ class DocumentPedago {
 
     public function setDocFile($Doc_file) {
         $this->Doc_file = $Doc_file;
+    }
+
+    public function setIdMatiere($id_matiere) {
+        $this->id_matiere = $id_matiere;
     }
 }
 ?>

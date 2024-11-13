@@ -4,7 +4,7 @@ include_once '../model/DocumentPedago.php';
 include_once '../model/DocumentPedagoRepository.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $Nom_matiere = $_POST['Nom_matiere'];
+    $id_matiere = $_POST['id_matiere'];
     $Systeme_concerne = $_POST['Systeme_concerne'];
     $Date_Document = $_POST['Date_Document'];
     $Type_document = $_POST['Type_document'];
@@ -20,16 +20,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $documentPedago = new DocumentPedago(
-        $Nom_matiere,
+        null, // Nom_matiere n'est plus utilisé
         $Systeme_concerne,
         $Date_Document,
         $Type_document,
-        $doc_file_path
+        $doc_file_path,
+        null, // id_pedagogique
+        $id_matiere
     );
 
     $documentPedagoRepository = new DocumentPedagoRepository($pdo);
     $documentPedagoRepository->save($documentPedago);
-
-    echo "Le document pédagogique a été ajouté avec succès. ID : " . $documentPedago->getIdPedagogique();
+    
+    echo "Le document pédagogique a été ajouté avec succès.";
 }
 ?>
