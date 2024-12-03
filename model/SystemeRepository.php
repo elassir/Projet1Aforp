@@ -59,13 +59,13 @@ class SystemeRepository {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $systemes[] = new Systeme(
                 $row['Nom_du_systeme'],
-                
                 $row['date_derniere_mise_a_jour'],
                 $row['image_systeme'],
                 $row['Numero_de_serie'],
                 $row['Fabriquant'],
                 $row['Date_fabrication'],
                 $row['Description'],
+                
                 $row['id_systeme']
             );
         }

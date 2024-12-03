@@ -1,9 +1,8 @@
 <?php
-// views/gestion_systemes.php
 include_once '../controlleur/connexion.php';
 include_once '../model/SystemeRepository.php';
 include_once '../model/fabriquant.php';
-include_once '../model/fabriquantRepository.php'; // Assurez-vous que ce chemin est correct
+include_once '../model/fabriquantRepository.php';
 
 // Affiche les messages de succès ou d'erreur, le cas échéant
 if (isset($message)) {
@@ -27,7 +26,7 @@ if (isset($message)) {
 
         // Affiche ou masque la modale pour les détails du système
         function openSystemModal(id_systeme) {
-            document.getElementById(`modal-${id_systeme}`).style.display = 'block';
+            document.getElementById(`modal-${id_systeme}`).style.display = 'Flex';
         }
 
         function closeSystemModal(id_systeme) {
@@ -45,8 +44,8 @@ if (isset($message)) {
         <form action="../controlleur/enregistrerSysteme.php" method="POST" enctype="multipart/form-data">
             <label for="Nom">Nom du système :</label>
             <input type="text" id="Nom" name="Nom" required>
-            <label for="date_derniere_mise_a_jour">Date de dernière mise à jour :</label>
-            <input type="date" id="date_derniere_mise_a_jour" name="date_derniere_mise_a_jour" required>
+            <label for="date_mise_a_jour">Date de dernière mise à jour :</label>
+            <input type="date" id="date_mise_a_jour" name="date_mise_a_jour" required>
             <label for="image_systeme">Image du système :</label>
             <input type="file" id="image_systeme" name="image_systeme" accept="image/*" >
             <label for="Numero_de_serie">Numéro de série :</label>
@@ -54,7 +53,7 @@ if (isset($message)) {
             <label for="Fabriquant">Fabriquant :</label>
             <input type="text" id="Fabriquant" name="Fabriquant" required>
             <label for="Date_fabrication">Date de fabrication :</label>
-            <input type="Date" id="Date_fabrication" name="Date_fabrication" required>
+            <input type="date" id="Date_fabrication" name="Date_fabrication" required>
             <label for="Description">Description :</label>
             <textarea id="Description" name="Description" rows="4" required></textarea>
             <button type="submit">Ajouter le Système</button>
@@ -68,6 +67,7 @@ if (isset($message)) {
             $systemeRepository = new SystemeRepository($pdo);
             $systemes = $systemeRepository->findAll();
             $fabriquantRepository = new FabriquantRepository($pdo);
+
             foreach ($systemes as $systeme):
                 $fabriquant = $fabriquantRepository->findBySiret($systeme->getFabriquant());
             ?>
@@ -85,7 +85,6 @@ if (isset($message)) {
                             <p><strong>Date de fabrication :</strong> <?= htmlspecialchars($systeme->getDateFabrication()); ?></p>
                             <p><strong>Tel :</strong> <?= htmlspecialchars($fabriquant->getTel()); ?></p>
                             <p><strong>Adresse :</strong> <?= htmlspecialchars($fabriquant->getAdresse()); ?></p>
-                            <p><strong>Matiere : </strong> <?= htmlspecialchars($matiere ->getMatiere()); ?></p>
                             <button class="doc-technique-button" onclick="window.location.href='../vue/gestion_doc.php?systeme_concerne=<?= $systeme->getIdSysteme(); ?>'">Document technique</button>
                             <button class="doc-pedago-button" onclick="window.location.href='../vue/gestion_docPedago.php?systeme_concerne=<?= $systeme->getIdSysteme(); ?>'">Document pédagogique</button>
                         </div>
