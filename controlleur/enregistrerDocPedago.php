@@ -31,7 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $documentPedagoRepository = new DocumentPedagoRepository($pdo);
     $documentPedagoRepository->save($documentPedago);
-    
-    echo "Le document pédagogique a été ajouté avec succès.";
+
+    echo "<p>Le document pédagogique a été ajouté avec succès. Vous allez être redirigé dans quelques secondes...</p>";
+    echo "<script>
+            setTimeout(function() {
+                window.location.href = '../vue/gestion_docPedago.php';
+            }, 3000);
+          </script>";
 }
 ?>

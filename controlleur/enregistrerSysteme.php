@@ -34,6 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $systemeRepository = new SystemeRepository($pdo);
     $systemeRepository->save($systeme);
 
-    echo "Le système a été ajouté avec succès. ID : " . $systeme->getIdSysteme();
+    echo "<p>Le système a été ajouté avec succès. Vous allez être redirigé dans quelques secondes...</p>";
+    echo "<script>
+            setTimeout(function() {
+                window.location.href = '../vue/gestion_systemes.php';
+            }, 3000);
+          </script>";
 }
 ?>

@@ -1,8 +1,15 @@
 <?php
+session_start();
 include_once '../controlleur/connexion.php';
 include_once '../model/SystemeRepository.php';
 include_once '../model/fabriquant.php';
 include_once '../model/fabriquantRepository.php';
+
+// Vérifiez si l'utilisateur est connecté et est un formateur
+if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'formateur') {
+    header('Location: ../index.php');
+    exit;
+}
 
 // Affiche les messages de succès ou d'erreur, le cas échéant
 if (isset($message)) {
@@ -26,7 +33,7 @@ if (isset($message)) {
 
         // Affiche ou masque la modale pour les détails du système
         function openSystemModal(id_systeme) {
-            document.getElementById(`modal-${id_systeme}`).style.display = 'Flex';
+            document.getElementById(`modal-${id_systeme}`).style.display = 'flex';
         }
 
         function closeSystemModal(id_systeme) {

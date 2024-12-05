@@ -33,5 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $documentTechniqueRepository = new DocumentTechniqueRepository($pdo);
     $documentTechniqueRepository->save($documentTechnique);
 
-    echo "Le document technique a été ajouté avec succès. ID : " . $documentTechnique->getid_Technique();
+    echo "<p>Le document technique a été ajouté avec succès. Vous allez être redirigé dans quelques secondes...</p>";
+    echo "<script>
+            setTimeout(function() {
+                window.location.href = '../vue/gestion_doc.php';
+            }, 3000);
+          </script>";
 }
+?>

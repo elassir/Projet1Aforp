@@ -1,9 +1,15 @@
-<?php 
-
+<?php
+session_start();
 include_once '../controlleur/connexion.php';
 include_once '../model/DocumentTechnique.php';
 include_once '../model/DocumentTechniqueRepository.php';
 include_once '../controlleur/enregistrerDocTec.php'; // Assurez-vous que ce chemin est correct
+
+// Vérifiez si l'utilisateur est connecté
+if (!isset($_SESSION['user'])) {
+    header('Location: ../index.php');
+    exit;
+}
 
 $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne'] : null;
 
@@ -30,32 +36,34 @@ if (isset($message)) {
 </head>
 <body>
     <h1>Gestion des Documents Techniques</h1>
-    <!-- Bouton pour afficher le formulaire d'ajout de document technique -->
-    <button onclick="toggleAddDocSection()" class="add-button">Ajouter un Document Technique</button>
-    <!-- Formulaire d'ajout de document technique masqué par défaut -->
-    <section id="ajout-doc-technique" style="display: none;">
-        <h2>Ajouter un Nouveau Document Technique</h2>
-        <form action="../controlleur/enregistrerDocTec.php" method="POST" enctype="multipart/form-data">
-            <label for="Nom_doc_tech">Nom du document :</label>
-            <input type="text" id="Nom_doc_tech" name="Nom_doc_tech" required>
-            <label for="Date">Date :</label>
-            <input type="date" id="Date" name="Date" required>
-            <label for="Categorie">Catégorie :</label>
-            <select id="Categorie" name="Categorie" required>
-                <option value="Presentation">Presentation</option>
-                <option value="Annexes">Annexes</option>
-                <option value="Notices">Notices</option>
-                <option value="Schema technique">Schema technique</option>
-            </select>
-            <label for="Systeme_concerne">Système concerné :</label>
-            <input type="text" id="Systeme_concerne" name="Systeme_concerne" required>
-            <label for="Doc_file">Fichier du document :</label>
-            <input type="file" id="Doc_file" name="Doc_file" accept=".pdf,.doc,.docx" required>
-            <label for="Version">Version :</label>
-            <input type="text" id="Version" name="Version" required>
-            <button type="submit">Ajouter le Document Technique</button>
-        </form>
-    </section>
+    <?php if ($_SESSION['role'] === 'formateur'): ?>
+        <!-- Bouton pour afficher le formulaire d'ajout de document technique -->
+        <button onclick="toggleAddDocSection()" class="add-button">Ajouter un Document Technique</button>
+        <!-- Formulaire d'ajout de document technique masqué par défaut -->
+        <section id="ajout-doc-technique" style="display: none;">
+            <h2>Ajouter un Nouveau Document Technique</h2>
+            <form action="../controlleur/enregistrerDocTec.php" method="POST" enctype="multipart/form-data">
+                <label for="Nom_doc_tech">Nom du document :</label>
+                <input type="text" id="Nom_doc_tech" name="Nom_doc_tech" required>
+                <label for="Date">Date :</label>
+                <input type="date" id="Date" name="Date" required>
+                <label for="Categorie">Catégorie :</label>
+                <select id="Categorie" name="Categorie" required>
+                    <option value="Presentation">Presentation</option>
+                    <option value="Annexes">Annexes</option>
+                    <option value="Notices">Notices</option>
+                    <option value="Schema technique">Schema technique</option>
+                </select>
+                <label for="Systeme_concerne">Système concerné :</label>
+                <input type="text" id="Systeme_concerne" name="Systeme_concerne" required>
+                <label for="Doc_file">Fichier du document :</label>
+                <input type="file" id="Doc_file" name="Doc_file" accept=".pdf,.doc,.docx" required>
+                <label for="Version">Version :</label>
+                <input type="text" id="Version" name="Version" required>
+                <button type="submit">Ajouter le Document Technique</button>
+            </form>
+        </section>
+    <?php endif; ?>
     <!-- Liste des documents techniques existants -->
     <section id="liste-docs-techniques">
         <h2>Liste des Documents Techniques</h2>
@@ -86,7 +94,6 @@ if (isset($message)) {
                             <div class="doc-technique-card">
                                 <h4><?= htmlspecialchars($doc->getNom_doc_tech()); ?></h4>
                                 <p><strong>Date :</strong> <?= htmlspecialchars($doc->getDate()); ?></p>
-                                
                                 <p><strong>Version :</strong> <?= htmlspecialchars($doc->getVersion()); ?></p>
                                 <a href="../uploads/<?= htmlspecialchars($doc->getDocFile()); ?>" target="_self">Voir le document</a>
                             </div>
