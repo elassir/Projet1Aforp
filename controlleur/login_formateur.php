@@ -10,7 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute([$mail]);
     $formateur = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($formateur && password_verify($mot_de_passe, $formateur['Mot_de_passe'])) {
+    // Comparer les mots de passe en clair (non hachés)
+    if ($formateur && $mot_de_passe === $formateur['Mot_de_passe']) {
         $_SESSION['user'] = $formateur;
         $_SESSION['role'] = 'formateur';
         header('Location: ../vue/gestion_systemes.php');

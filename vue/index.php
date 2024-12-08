@@ -1,7 +1,6 @@
 <?php
 session_start();
 include_once '../controlleur/connexion.php';
-
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +16,7 @@ include_once '../controlleur/connexion.php';
     <p>Veuillez vous connecter en tant que :</p>
     <div class="auth-buttons">
         <a href="../controlleur/login_formateur.php" class="auth-button">Formateur</a>
-        <a href="./controlleur/login_apprenti.php" class="auth-button">Apprenti</a>
+        <a href="../controlleur/login_apprenti.php" class="auth-button">Apprenti</a>
     </div>
 </body>
 </html>

@@ -10,9 +10,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute([$mail]);
     $apprenti = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($apprenti && password_verify($mot_de_passe, $apprenti['Mot_de_passe'])) {
+    // Comparer les mots de passe en clair (non hachés)
+    if ($apprenti && $mot_de_passe === $apprenti['Mot_de_passe']) {
         $_SESSION['user'] = $apprenti;
         $_SESSION['role'] = 'apprenti';
+
+        // Débogage : Afficher les données de session et le chemin de redirection
+        echo '<pre>';
+        print_r($_SESSION);
+        echo '</pre>';
+        echo 'Redirection vers : ../vue/gestion_systemes.php';
+        
+
         header('Location: ../vue/gestion_systemes.php');
         exit;
     } else {

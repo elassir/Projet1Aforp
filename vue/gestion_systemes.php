@@ -5,8 +5,8 @@ include_once '../model/SystemeRepository.php';
 include_once '../model/fabriquant.php';
 include_once '../model/fabriquantRepository.php';
 
-// Vérifiez si l'utilisateur est connecté et est un formateur
-if (!isset($_SESSION['user']) || $_SESSION['role'] !== 'formateur') {
+// Vérifiez si l'utilisateur est connecté
+if (!isset($_SESSION['user'])) {
     header('Location: ../index.php');
     exit;
 }
@@ -43,29 +43,31 @@ if (isset($message)) {
 </head>
 <body>
     <h1>Gestion des Systèmes</h1>
-    <!-- Bouton pour afficher le formulaire d'ajout de système -->
-    <button onclick="toggleAddSystemSection()" class="add-button">Ajouter un Système</button>
-    <!-- Formulaire d'ajout de système masqué par défaut -->
-    <section id="ajout-systeme" style="display: none;">
-        <h2>Ajouter un Nouveau Système</h2>
-        <form action="../controlleur/enregistrerSysteme.php" method="POST" enctype="multipart/form-data">
-            <label for="Nom">Nom du système :</label>
-            <input type="text" id="Nom" name="Nom" required>
-            <label for="date_mise_a_jour">Date de dernière mise à jour :</label>
-            <input type="date" id="date_mise_a_jour" name="date_mise_a_jour" required>
-            <label for="image_systeme">Image du système :</label>
-            <input type="file" id="image_systeme" name="image_systeme" accept="image/*" >
-            <label for="Numero_de_serie">Numéro de série :</label>
-            <input type="text" id="Numero_de_serie" name="Numero_de_serie" required>
-            <label for="Fabriquant">Fabriquant :</label>
-            <input type="text" id="Fabriquant" name="Fabriquant" required>
-            <label for="Date_fabrication">Date de fabrication :</label>
-            <input type="date" id="Date_fabrication" name="Date_fabrication" required>
-            <label for="Description">Description :</label>
-            <textarea id="Description" name="Description" rows="4" required></textarea>
-            <button type="submit">Ajouter le Système</button>
-        </form>
-    </section>
+    <?php if ($_SESSION['role'] === 'formateur'): ?>
+        <!-- Bouton pour afficher le formulaire d'ajout de système -->
+        <button onclick="toggleAddSystemSection()" class="add-button">Ajouter un Système</button>
+        <!-- Formulaire d'ajout de système masqué par défaut -->
+        <section id="ajout-systeme" style="display: none;">
+            <h2>Ajouter un Nouveau Système</h2>
+            <form action="../controlleur/enregistrerSysteme.php" method="POST" enctype="multipart/form-data">
+                <label for="Nom">Nom du système :</label>
+                <input type="text" id="Nom" name="Nom" required>
+                <label for="date_mise_a_jour">Date de dernière mise à jour :</label>
+                <input type="date" id="date_mise_a_jour" name="date_mise_a_jour" required>
+                <label for="image_systeme">Image du système :</label>
+                <input type="file" id="image_systeme" name="image_systeme" accept="image/*" >
+                <label for="Numero_de_serie">Numéro de série :</label>
+                <input type="text" id="Numero_de_serie" name="Numero_de_serie" required>
+                <label for="Fabriquant">Fabriquant :</label>
+                <input type="text" id="Fabriquant" name="Fabriquant" required>
+                <label for="Date_fabrication">Date de fabrication :</label>
+                <input type="date" id="Date_fabrication" name="Date_fabrication" required>
+                <label for="Description">Description :</label>
+                <textarea id="Description" name="Description" rows="4" required></textarea>
+                <button type="submit">Ajouter le Système</button>
+            </form>
+        </section>
+    <?php endif; ?>
     <!-- Liste des systèmes existants -->
     <section id="liste-systemes">
         <h2>Liste des Systèmes</h2>
