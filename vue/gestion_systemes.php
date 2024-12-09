@@ -1,16 +1,13 @@
 <?php
 session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: ../vue/index.php');
+    exit;
+}
 include_once '../controlleur/connexion.php';
 include_once '../model/SystemeRepository.php';
 include_once '../model/fabriquant.php';
 include_once '../model/fabriquantRepository.php';
-
-
-// Vérifiez si l'utilisateur est connecté
-if (!isset($_SESSION['user'])) {
-    header('Location: ../index.php');
-    exit;
-}
 
 // Affiche les messages de succès ou d'erreur, le cas échéant
 if (isset($message)) {
@@ -31,6 +28,9 @@ if (isset($message)) {
             const section = document.getElementById('ajout-systeme');
             section.style.display = section.style.display === 'none' ? 'block' : 'none';
         }
+
+        // Déconnexion automatique lors de la fermeture de la page
+       
 
         // Affiche ou masque la modale pour les détails du système
         function openSystemModal(id_systeme) {

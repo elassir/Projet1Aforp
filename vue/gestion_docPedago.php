@@ -1,4 +1,5 @@
-<?php 
+<?php
+session_start(); // Ajoutez cette ligne pour démarrer la session
 include_once '../controlleur/connexion.php';
 include_once '../model/DocumentPedago.php';
 include_once '../model/DocumentPedagoRepository.php';
@@ -26,44 +27,46 @@ $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne']
 </head>
 <body>
     <h1>Gestion des Documents Pédagogiques</h1>
-    <!-- Bouton pour afficher le formulaire d'ajout de document pédagogique -->
-    <button onclick="toggleAddDocSection()" class="add-button">Ajouter un Document Pédagogique</button>
-    <!-- Formulaire d'ajout de document pédagogique masqué par défaut -->
-    <section id="ajout-doc-pedago" style="display: none;">
-        <h2>Ajouter un Nouveau Document Pédagogique</h2>
-        <form action="../controlleur/enregistrerDocPedago.php" method="POST" enctype="multipart/form-data">
-            <label for="id_matiere">Matière :</label>
-            <select id="id_matiere" name="id_matiere" required>
-                <?php
-                $matiereRepository = new MatiereRepository($pdo);
-                $matieres = $matiereRepository->findAll();
-                foreach ($matieres as $matiere) {
-                    echo "<option value='{$matiere->getIdMatiere()}'>{$matiere->getNomMatiere()}</option>";
-                }
-                ?>
-            </select>
-            <label for="Systeme_concerne">Système concerné :</label>
-            <input type="text" id="Systeme_concerne" name="Systeme_concerne" required>
-            <label for="Date_Document">Date du document :</label>
-            <input type="date" id="Date_Document" name="Date_Document" required>
-            <label for="Type_document">Type de document :</label>
-            <select id="Type_document" name="Type_document" required>
-                <option value="DEVOIR">Devoir</option>
-                <option value="CONSIGNE">Consigne</option>
-            </select>
-            <label for="Doc_file">Fichier du document :</label>
-            <input type="file" id="Doc_file" name="Doc_file" accept=".pdf,.doc,.docx" required>
-            <button type="submit">Ajouter le Document Pédagogique</button>
-        </form>
-    </section>
+    <?php if ($_SESSION['role'] === 'formateur'): ?>
+        <!-- Bouton pour afficher le formulaire d'ajout de document pédagogique -->
+        <button onclick="toggleAddDocSection()" class="add-button">Ajouter un Document Pédagogique</button>
+        <!-- Formulaire d'ajout de document pédagogique masqué par défaut -->
+        <section id="ajout-doc-pedago" style="display: none;">
+            <h2>Ajouter un Nouveau Document Pédagogique</h2>
+            <form action="../controlleur/enregistrerDocPedago.php" method="POST" enctype="multipart/form-data">
+                <label for="id_matiere">Matière :</label>
+                <select id="id_matiere" name="id_matiere" required>
+                    <?php
+                    $matiereRepository = new MatiereRepository($pdo);
+                    $matieres = $matiereRepository->findAll();
+                    foreach ($matieres as $matiere) {
+                        echo "<option value='{$matiere->getIdMatiere()}'>{$matiere->getNomMatiere()}</option>";
+                    }
+                    ?>
+                </select>
+                <label for="Systeme_concerne">Système concerné :</label>
+                <input type="text" id="Systeme_concerne" name="Systeme_concerne" required>
+                <label for="Date_Document">Date du document :</label>
+                <input type="date" id="Date_Document" name="Date_Document" required>
+                <label for="Type_document">Type de document :</label>
+                <select id="Type_document" name="Type_document" required>
+                    <option value="DEVOIR">Devoir</option>
+                    <option value="CONSIGNE">Consigne</option>
+                </select>
+                <label for="Doc_file">Fichier :</label>
+                <input type="file" id="Doc_file" name="Doc_file" required>
+                <button type="submit">Ajouter le Document Pédagogique</button>
+            </form>
+        </section>
+    <?php endif; ?>
     <!-- Liste des documents pédagogiques existants -->
     <section id="liste-docs-pedago">
         <h2>Liste des Documents Pédagogiques</h2>
         <div class="docs-techniques-container">
             <?php
             $documentPedagoRepository = new DocumentPedagoRepository($pdo);
-            if ($systeme_concerne) {
-                $documents = $documentPedagoRepository->findBySysteme($systeme_concerne);
+            if ($_SESSION['role'] === 'apprenti') {
+                $documents = $documentPedagoRepository->findByApprenti($_SESSION['user']['id_apprenti']);
             } else {
                 $documents = $documentPedagoRepository->findAll();
             }
@@ -79,15 +82,12 @@ $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne']
             <div class="row">
                 <?php foreach ($types as $type => $docs): ?>
                     <div class="column">
-                        <h3><?= htmlspecialchars($type); ?></h3>
-                        <?php foreach ($docs as $doc): ?>
-                            <div class="doc-technique-card">
-                               
-                                <p><strong>Date :</strong> <?= htmlspecialchars($doc->getDateDocument()); ?></p>
-                                <p><strong>Système concerné :</strong> <?= htmlspecialchars($doc->getSystemeConcerne()); ?></p>
-                                <a href="../uploads/<?= htmlspecialchars($doc->getDocFile()); ?>" target="_self">Voir le document</a>
-                            </div>
-                        <?php endforeach; ?>
+                        <h3><?= htmlspecialchars($type) ?></h3>
+                        <ul>
+                            <?php foreach ($docs as $doc): ?>
+                                <li><?= htmlspecialchars($doc->getNomMatiere()) ?> - <?= htmlspecialchars($doc->getDateDocument()) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
                     </div>
                 <?php endforeach; ?>
             </div>

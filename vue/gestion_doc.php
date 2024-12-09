@@ -1,15 +1,13 @@
 <?php
 session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: ../vue/index.php');
+    exit;
+}
 include_once '../controlleur/connexion.php';
 include_once '../model/DocumentTechnique.php';
 include_once '../model/DocumentTechniqueRepository.php';
 include_once '../controlleur/enregistrerDocTec.php'; // Assurez-vous que ce chemin est correct
-
-// Vérifiez si l'utilisateur est connecté
-if (!isset($_SESSION['user'])) {
-    header('Location: ../index.php');
-    exit;
-}
 
 $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne'] : null;
 
@@ -32,10 +30,15 @@ if (isset($message)) {
             const section = document.getElementById('ajout-doc-technique');
             section.style.display = section.style.display === 'none' ? 'block' : 'none';
         }
+
+        // Déconnexion automatique lors de la fermeture de la page
+       
+       
     </script>
 </head>
 <body>
     <h1>Gestion des Documents Techniques</h1>
+    <button onclick="window.location.href='../controlleur/logout.php'" class="logout-button">Déconnexion</button>
     <?php if ($_SESSION['role'] === 'formateur'): ?>
         <!-- Bouton pour afficher le formulaire d'ajout de document technique -->
         <button onclick="toggleAddDocSection()" class="add-button">Ajouter un Document Technique</button>

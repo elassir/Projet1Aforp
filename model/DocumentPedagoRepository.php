@@ -91,5 +91,16 @@ class DocumentPedagoRepository {
         }
         return $documents;
     }
+
+    public function findByApprenti($id_apprenti) {
+        $stmt = $this->pdo->prepare("
+            SELECT dp.* 
+            FROM document_pedagogique dp
+            JOIN apprenti_devoir ad ON dp.id_pedagogique = ad.Devoir
+            WHERE ad.Apprenti = ?
+        ");
+        $stmt->execute([$id_apprenti]);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'DocumentPedago');
+    }
 }
 ?>
