@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 include_once '../controlleur/connexion.php';
 
@@ -15,13 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['user'] = $apprenti;
         $_SESSION['role'] = 'apprenti';
 
-        // Débogage : Afficher les données de session et le chemin de redirection
-        echo '<pre>';
-        print_r($_SESSION);
-        echo '</pre>';
-        echo 'Redirection vers : ../vue/gestion_systemes.php';
-        
-
+        // Assurez-vous qu'aucun contenu n'est envoyé avant la redirection
         header('Location: ../vue/gestion_systemes.php');
         exit;
     } else {

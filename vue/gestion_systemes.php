@@ -5,6 +5,7 @@ include_once '../model/SystemeRepository.php';
 include_once '../model/fabriquant.php';
 include_once '../model/fabriquantRepository.php';
 
+
 // Vérifiez si l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {
     header('Location: ../index.php');
