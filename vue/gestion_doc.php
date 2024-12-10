@@ -30,10 +30,6 @@ if (isset($message)) {
             const section = document.getElementById('ajout-doc-technique');
             section.style.display = section.style.display === 'none' ? 'block' : 'none';
         }
-
-        // Déconnexion automatique lors de la fermeture de la page
-       
-       
     </script>
 </head>
 <body>

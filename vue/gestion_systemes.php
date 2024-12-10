@@ -44,6 +44,7 @@ if (isset($message)) {
 </head>
 <body>
     <h1>Gestion des Systèmes</h1>
+    <button onclick="window.location.href='../controlleur/logout.php'" class="logout-button">Déconnexion</button>
     <?php if ($_SESSION['role'] === 'formateur'): ?>
         <!-- Bouton pour afficher le formulaire d'ajout de système -->
         <button onclick="toggleAddSystemSection()" class="add-button">Ajouter un Système</button>
