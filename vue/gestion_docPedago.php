@@ -28,13 +28,14 @@ $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne']
 <body>
     <h1>Gestion des Documents Pédagogiques</h1>
     <button onclick="window.location.href='../controlleur/logout.php'" class="logout-button">Déconnexion</button>
-    <?php if ($_SESSION['role'] === 'formateur'): ?>
+    <?php if ($_SESSION['role'] === 'formateur' || $_SESSION['role'] === 'apprenti'): ?>
         <!-- Bouton pour afficher le formulaire d'ajout de document pédagogique -->
         <button onclick="toggleAddDocSection()" class="add-button">Ajouter un Document Pédagogique</button>
         <!-- Formulaire d'ajout de document pédagogique masqué par défaut -->
         <section id="ajout-doc-pedago" style="display: none;">
             <h2>Ajouter un Nouveau Document Pédagogique</h2>
             <form action="../controlleur/enregistrerDocPedago.php" method="POST" enctype="multipart/form-data">
+                
                 <label for="id_matiere">Matière :</label>
                 <select id="id_matiere" name="id_matiere" required>
                     <?php
@@ -86,7 +87,11 @@ $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne']
                         <h3><?= htmlspecialchars($type) ?></h3>
                         <ul>
                             <?php foreach ($docs as $doc): ?>
-                                <li><?= htmlspecialchars($doc->getNomMatiere()) ?> - <?= htmlspecialchars($doc->getDateDocument()) ?></li>
+                                <li>
+    <a href="../uploads/<?= htmlspecialchars($doc->getDocFile()) ?>" target="_blank">
+        <?= htmlspecialchars($doc->getDateDocument()) ?>
+    </a>
+</li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
