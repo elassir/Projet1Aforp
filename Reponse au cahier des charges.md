@@ -108,6 +108,7 @@ Exemple de diagramme de séquence pour l'enregistrement d'un système technique 
 7. Le système confirme l'enregistrement et met à jour la liste des systèmes
 8. Le formateur peut associer des documents techniques au système
 
+```mermaid
 +----------+          +-----------+          +------------+          +-------------+
 | Formateur|          | Interface |          | Contrôleur |          | Base de     |
 |          |          | Gestion   |          | Système    |          | Données     |
@@ -142,7 +143,7 @@ Exemple de diagramme de séquence pour l'enregistrement d'un système technique 
       |<--------------------|                      |                       |
       |                     |                      |                       |
 
-
+```
 
 ### Diagramme de flux
 
@@ -190,7 +191,7 @@ Diagramme de Flux Global de l'Application :
 ## 5. Planning (Diagramme de Gantt)
 
 
-[text](<documents/Online Gantt 20241112.pdf>)
+[Image pdf diagramme de gantt](<documents/Online Gantt 20241112.pdf>)
 
 Le projet est planifié sur une période de 3 mois avec les phases suivantes :
 
