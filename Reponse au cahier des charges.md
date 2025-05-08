@@ -108,7 +108,7 @@ Exemple de diagramme de séquence pour l'enregistrement d'un système technique 
 7. Le système confirme l'enregistrement et met à jour la liste des systèmes
 8. Le formateur peut associer des documents techniques au système
 
-```mermaid
+```
 +----------+          +-----------+          +------------+          +-------------+
 | Formateur|          | Interface |          | Contrôleur |          | Base de     |
 |          |          | Gestion   |          | Système    |          | Données     |
@@ -149,6 +149,7 @@ Exemple de diagramme de séquence pour l'enregistrement d'un système technique 
 
 Diagramme de Flux Global de l'Application :
 
+```
 +----------------+     +-----------------+     +------------------+
 |                |     |                 |     |                  |
 | Authentification|---->| Vérification    |---->| Accès Interface |
@@ -187,6 +188,8 @@ Diagramme de Flux Global de l'Application :
                                          | Système  |         | Document  |
                                          |          |         |           |
                                          +----------+         +-----------+
+
+```
 
 ## 5. Planning (Diagramme de Gantt)
 
