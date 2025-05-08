@@ -103,8 +103,8 @@ Les contrôleurs gèrent la logique métier de l'application. Ils reçoivent les
 +---------------+          | Numero_de_serie  |          +-----------------+
                            | image_systeme    |                  ↑
                            +------------------+                  |
-                                   ↑                             |
-                                   |                             |
+                                   ↑                            |
+                                   |                            |
 +---------------+          +------------------+          +-----------------+
 | FORMATEUR     |          | DOCUMENT         |          | DOCUMENT        |
 +---------------+          | TECHNIQUE        |          | PEDAGOGIQUE     |
@@ -116,7 +116,7 @@ Les contrôleurs gèrent la logique métier de l'application. Ils reçoivent les
 +---------------+          | Systeme_concerne |--------->| id_matiere      |
        ↑                   | Nom_doc_tech     |          +-----------------+
        |                   +------------------+                  ↑
-       |                                                         |
+       |                                                        |
 +---------------+                                       +-----------------+
 | APPRENTI      |                                       | FORMATEUR_DEVOIR|
 +---------------+                                       +-----------------+
@@ -131,7 +131,6 @@ Les contrôleurs gèrent la logique métier de l'application. Ils reçoivent les
                                                        | Apprenti        |
                                                        | Devoir          |
                                                        +-----------------+
-
 
 
 
