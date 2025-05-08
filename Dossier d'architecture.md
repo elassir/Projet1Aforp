@@ -12,8 +12,7 @@
 6. Interactions et flux de données
 7. Sécurité
 8. Technologies utilisées
-9. Points d'extension potentiels
-10. Conclusion
+9. Conclusion
 
 ## 1. Introduction
 
