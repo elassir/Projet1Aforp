@@ -1,52 +1,166 @@
 /* styles.css */
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 /* Réinitialisation des marges et des paddings */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif; /* Police plus moderne */
 }
 
 /* Styles généraux */
 body {
-    background-color: #f4f4f9;
-    color: #333;
+    color: #fff; /* Texte blanc pour contraster avec le fond */
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    overflow: hidden; /* Empêcher les barres de défilement dues à l'animation de fond */
+}
+
+/* Section héroïque avec image de fond */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url('../uploads/pic04.jpg'); /* Assurez-vous que cette image existe */
+    background-size: cover;
+    background-position: center center;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between; /* Distribue l'espace équitablement */
+}
+
+/* @keyframes backgroundScroll { ... } supprimé pour image statique */
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Superposition sombre pour la lisibilité */
+    z-index: 1;
+}
+
+.container {
+    position: relative; /* Pour que le contenu soit au-dessus de l'overlay */
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.1); /* Fond du conteneur semi-transparent */
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+    margin-left: 50px; /* Espace entre la sidebar et le contenu principal */
+    -webkit-backdrop-filter: blur(10px); /* Support pour Safari */
+    backdrop-filter: blur(10px); /* Effet de flou pour le fond du conteneur */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.logo {
+    width: 120px;
+    margin-bottom: 25px;
+    /* Animation retirée */
 }
 
 h1 {
     margin-bottom: 20px;
-    color: #333;
+    color: #fff;
+    font-size: 2.5em; /* Taille de police plus grande */
+    font-weight: 700; /* Police plus grasse */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Ombre portée pour le texte */
 }
 
 p {
-    margin-bottom: 20px;
-    color: #666;
+    margin-bottom: 35px;
+    color: #eee; /* Couleur de texte légèrement plus claire */
+    font-size: 1.2em;
+    font-weight: 300;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
 }
 
-/* Boutons d'authentification */
-.auth-buttons {
+/* Cartes de sélection de rôle */
+.auth-cards {
     display: flex;
+    flex-direction: column;
     gap: 20px;
+    margin-top: 20px;
 }
-
-.auth-button {
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
+.auth-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
     text-decoration: none;
-    text-align: center;
-    transition: background-color 0.3s;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+.auth-card i {
+    font-size: 3em;
+    margin-bottom: 15px;
+    color: #00d1b2;
+}
+.auth-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+.auth-card p {
+    font-size: 1em;
+    opacity: 0.8;
+}
+.auth-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
-.auth-button:hover {
-    background-color: #2980b9;
+@media (min-width: 768px) {
+    .auth-cards {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        order: 2; /* Sur mobile, la sidebar reste en bas */
+    }
+    
+    .container {
+        margin: 20px auto;
+        max-width: 90%;
+        order: 1; /* Sur mobile, le contenu reste en haut */
+    }
+    
+    .auth-cards {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .auth-card {
+        width: 45%;
+        min-width: 200px;
+    }
 }
 
 /* Formulaire de connexion */
@@ -74,6 +188,72 @@ form select {
     border-radius: 4px;
     margin-bottom: 10px;
     width: 100%;
+}
+
+/* Mise en page des formulaires de connexion */
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%);
+    padding: 20px;
+}
+.image-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-logo {
+    width: 150px;
+}
+.form-section {
+    flex: 1;
+    max-width: 380px;
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    color: #fff;
+}
+.form-section h1 {
+    margin-bottom: 25px;
+}
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+.input-group i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+}
+.form-section input {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+}
+.btn {
+    width: 100%;
+    padding: 12px;
+    background-image: linear-gradient(to right, #00d1b2, #0088cc);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.btn:hover {
+    transform: translateY(-3px) scale(1.02);
 }
 
 form button {
@@ -210,4 +390,105 @@ form button:hover {
 
 .logout-button:hover {
     background-color: #c0392b;
+}
+
+/* Styles pour la page de connexion */
+.login-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 0 50px;
+    background-color: #f4f4f9;
+}
+
+.image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-logo {
+    max-width: 80%;
+    height: auto;
+}
+
+.form-section {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+}
+
+.form-section h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-section label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-section input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-section button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-section button:hover {
+    background-color: #45a049;
+}
+
+/* Sidebar de choix utilisateur */
+.sidebar {
+    position: relative;
+    z-index: 2;
+    width: 300px;
+    height: 100%;
+    background-color: rgba(0, 30, 60, 0.85); /* Fond bleu foncé semi-transparent */
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    order: 2; /* Place la sidebar après le contenu principal */
+}
+
+/* Container principal ajusté */
+.container {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 60px;
+    border-radius: 15px;
+    margin: 40px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    max-width: none;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    order: 1; /* Place le contenu principal avant la sidebar */
 }
