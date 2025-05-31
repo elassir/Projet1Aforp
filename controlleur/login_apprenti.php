@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="login-container">
         <div class="image-section">
-            <img src="../uploads/icon/logo_aforp.png" alt="Logo Entreprise" class="login-logo">
+            <img src="../uploads/logo_aforp.png" alt="Logo Entreprise" class="login-logo">
         </div>
         <div class="form-section">
             <h1>Connexion Apprenti</h1>

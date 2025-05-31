@@ -53,10 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Inscription Apprenti</title>
     <link rel="stylesheet" href="../vue/style_index.css">
 </head>
-<body>
-    <div class="login-container">
+<body>    <div class="login-container">
         <div class="image-section">
-            <img src="../uploads/icon/logo_aforp.png" alt="Logo Entreprise" class="login-logo">
+            <img src="../uploads/logo_aforp.png" alt="Logo Entreprise" class="login-logo">
         </div>
         <div class="form-section">
             <h1>Inscription Apprenti</h1>
