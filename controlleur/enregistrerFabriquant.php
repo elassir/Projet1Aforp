@@ -4,10 +4,17 @@ include_once '../model/fabriquant.php';
 include_once '../model/fabriquantRepository.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $Nom = $_POST['Nom'];
-    $Siret = $_POST['Siret'];
-    $Tel = $_POST['Tel'];
-    $Adresse = $_POST['Adresse'];
+    $Nom = $_POST['Nom'] ?? '';
+    $Siret = $_POST['Siret'] ?? '';
+    $Tel = $_POST['Tel'] ?? '';
+    $Adresse = $_POST['Adresse'] ?? '';
+
+    // Débogage : afficher les données reçues
+    echo "<p>Données reçues :</p>";
+    echo "<p>Nom: " . htmlspecialchars($Nom) . "</p>";
+    echo "<p>SIRET: " . htmlspecialchars($Siret) . "</p>";
+    echo "<p>Tel: " . htmlspecialchars($Tel) . "</p>";
+    echo "<p>Adresse: " . htmlspecialchars($Adresse) . "</p>";
 
     // Validation basique du SIRET (doit être composé de 14 chiffres)
     if (!preg_match('/^[0-9]{14}$/', $Siret)) {
@@ -18,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }, 3000);
               </script>";
         exit;
-    }    try {
+    }try {
         $fabriquantRepository = new FabriquantRepository($pdo);
         
         // Vérifier si le SIRET existe déjà

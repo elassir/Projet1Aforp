@@ -6,29 +6,34 @@ class FabriquantRepository {
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
-    }
-
-    public function save(Fabriquant $fabriquant) {
+    }    public function save(Fabriquant $fabriquant) {
         try {
             $this->pdo->beginTransaction();
-            if ($fabriquant->getSiret() == null) {
-                $stmt = $this->pdo->prepare("INSERT INTO fabriquant (Nom, Tel, Adresse, Siret) VALUES (?, ?, ?, ?)");
-                $stmt->execute([
-                    $fabriquant->getNom(),
-                    $fabriquant->getTel(),
-                    $fabriquant->getAdresse(),
-                    $fabriquant->getSiret()
-                ]);
-                $fabriquant->setSiret($this->pdo->lastInsertId());
-            } else {
-                $stmt = $this->pdo->prepare("UPDATE fabriquant SET Nom = ?, Tel = ?, Adresse = ? WHERE Siret = ?");
-                $stmt->execute([
-                    $fabriquant->getNom(),
-                    $fabriquant->getTel(),
-                    $fabriquant->getAdresse(),
-                    $fabriquant->getSiret()
-                ]);
-            }
+            // Puisque le contrôleur vérifie déjà l'existence, on fait toujours un INSERT pour un nouveau fabricant
+            $stmt = $this->pdo->prepare("INSERT INTO fabriquant (Nom, Tel, Adresse, Siret) VALUES (?, ?, ?, ?)");
+            $stmt->execute([
+                $fabriquant->getNom(),
+                $fabriquant->getTel(),
+                $fabriquant->getAdresse(),
+                $fabriquant->getSiret()
+            ]);
+            $this->pdo->commit();
+        } catch (Exception $e) {
+            $this->pdo->rollBack();
+            throw $e;
+        }
+    }
+    
+    public function update(Fabriquant $fabriquant) {
+        try {
+            $this->pdo->beginTransaction();
+            $stmt = $this->pdo->prepare("UPDATE fabriquant SET Nom = ?, Tel = ?, Adresse = ? WHERE Siret = ?");
+            $stmt->execute([
+                $fabriquant->getNom(),
+                $fabriquant->getTel(),
+                $fabriquant->getAdresse(),
+                $fabriquant->getSiret()
+            ]);
             $this->pdo->commit();
         } catch (Exception $e) {
             $this->pdo->rollBack();
