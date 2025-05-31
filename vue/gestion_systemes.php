@@ -57,11 +57,28 @@ if (isset($message)) {
                 <label for="date_mise_a_jour">Date de dernière mise à jour :</label>
                 <input type="date" id="date_mise_a_jour" name="date_mise_a_jour" required>
                 <label for="image_systeme">Image du système :</label>
-                <input type="file" id="image_systeme" name="image_systeme" accept="image/*" >
-                <label for="Numero_de_serie">Numéro de série :</label>
-                <input type="text" id="Numero_de_serie" name="Numero_de_serie" required>
-                <label for="Fabriquant">Fabriquant :</label>
-                <input type="text" id="Fabriquant" name="Fabriquant" required>
+                <input type="file" id="image_systeme" name="image_systeme" accept="image/*" >                <label for="Numero_de_serie">Numéro de série :</label>
+                <input type="text" id="Numero_de_serie" name="Numero_de_serie" required>                <label for="Fabriquant">Fabriquant :</label>
+                <select id="Fabriquant" name="Fabriquant" required>
+                    <option value="">Sélectionnez un fabricant</option>
+                    <?php
+                    $fabriquantRepository = new FabriquantRepository($pdo);
+                    $fabricants = $fabriquantRepository->findAll();
+                    if (empty($fabricants)): ?>
+                        <option value="" disabled>Aucun fabricant disponible</option>
+                    <?php else:
+                        foreach ($fabricants as $fabricant): ?>
+                            <option value="<?= htmlspecialchars($fabricant->getSiret()); ?>">
+                                <?= htmlspecialchars($fabricant->getNom()); ?> (SIRET: <?= htmlspecialchars($fabricant->getSiret()); ?>)
+                            </option>
+                        <?php endforeach;
+                    endif; ?>
+                </select>
+                <p style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                    <a href="gestion_fabricants.php" target="_blank" style="color: #007bff; text-decoration: none;">
+                        ➕ Ajouter un nouveau fabricant
+                    </a>
+                </p>
                 <label for="Date_fabrication">Date de fabrication :</label>
                 <input type="date" id="Date_fabrication" name="Date_fabrication" required>
                 <label for="Description">Description :</label>

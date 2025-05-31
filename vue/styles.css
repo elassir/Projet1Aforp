@@ -45,8 +45,10 @@ form label {
 
 form input[type="text"],
 form input[type="date"],
+form input[type="tel"],
 form input[type="file"],
-form textarea {
+form textarea,
+form select {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -308,4 +310,46 @@ body.logout-button:hover {
 
 .logout-button:hover {
     background-color: #c0392b;
+}
+
+/* Bouton retour */
+.back-button {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    margin: 5px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+}
+
+/* Styles pour les menus déroulants */
+form select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+
+/* Liens dans les formulaires */
+form p a {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+form p a:hover {
+    color: #0056b3;
+    text-decoration: underline;
 }
