@@ -23,7 +23,7 @@ if (isset($message)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des Documents Techniques</title>
-    <link rel="stylesheet" href="/projet1.1 copy/vue/gestion_doc.css">
+    <link rel="stylesheet" href="gestion_doc.css">
     <script>
         // Affiche ou masque la section d'ajout de document technique
         function toggleAddDocSection() {

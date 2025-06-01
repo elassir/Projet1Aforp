@@ -1,1 +1,7 @@
 /test
+/MIGRATION_OVH.md
+/controlleur/test_connexion.php 
+/controlleur/config_ovh.php
+/controlleur/connexion.php 
+/GUIDE_FTP_OVH.md
+/prepare_upload.ps1
