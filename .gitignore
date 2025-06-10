@@ -6,3 +6,11 @@
 /GUIDE_FTP_OVH.md
 /prepare_upload.ps1
 /connexion.php
+/.bash_logout
+/.bash_profile
+/.bashrc
+/.ovhconfig
+/www/
+/.htaccess
+/.vscode/
+/wp-config.php
