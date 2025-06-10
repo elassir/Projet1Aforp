@@ -57,6 +57,15 @@ L'application suit une architecture MVC (Modèle-Vue-Contrôleur) :
 
 ## Installation
 
+### Application en ligne
+
+L'application est désormais disponible en ligne à l'adresse suivante :
+**[https://elassir.ovh/vue](https://elassir.ovh/vue)**
+
+### Installation locale (optionnelle)
+
+Si vous souhaitez installer l'application localement :
+
 1. Clonez le dépôt dans votre répertoire web (www ou htdocs) :
    ```sh
    git clone <url-du-repo>
@@ -68,7 +77,7 @@ L'application suit une architecture MVC (Modèle-Vue-Contrôleur) :
    ```php
    $host='localhost:3306';
    $bdd= 'projet1';
-   $username ='root';
+   $username ='';
    $password = '';
    ```
 
@@ -78,12 +87,7 @@ L'application suit une architecture MVC (Modèle-Vue-Contrôleur) :
 
 ## Comment utiliser l'application
 
-### Connexion
 
-1. Sur la page d'accueil, choisissez entre une connexion en tant que formateur ou apprenti
-2. Pour les besoins de démonstration/test, utilisez :
-   - Formateur : email = formateur@test.com, mot de passe = formateur123
-   - Apprenti : email = apprenti@test.com, mot de passe = apprenti123
 
 ### Gestion des Systèmes
 
