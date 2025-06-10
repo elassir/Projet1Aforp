@@ -44,7 +44,14 @@ if (isset($message)) {
 </head>
 <body>
     <h1>Gestion des Systèmes</h1>
-    <button onclick="window.location.href='../controlleur/logout.php'" class="logout-button">Déconnexion</button>
+    <div class="header-buttons">
+        <button onclick="window.location.href='../controlleur/logout.php'" class="logout-button">Déconnexion</button>
+        <?php if ($_SESSION['role'] === 'formateur'): ?>
+            <button onclick="window.location.href='../controlleur/backup_manager.php'" class="backup-button">💾 Backup BDD</button>
+            <button onclick="window.location.href='log_viewer.php'" class="logs-button">📊 Logs Système</button>
+        <?php endif; ?>
+    </div>
+    
     <?php if ($_SESSION['role'] === 'formateur'): ?>
         <!-- Bouton pour afficher le formulaire d'ajout de système -->
         <button onclick="toggleAddSystemSection()" class="add-button">Ajouter un Système</button>

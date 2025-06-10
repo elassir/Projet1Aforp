@@ -14,3 +14,18 @@
 /.htaccess
 /.vscode/
 /wp-config.php
+
+# Nouveaux ajouts pour la gestion des cours
+/backups/
+/logs/
+*.sql
+!structure.sql
+!demo_data.sql
+
+# Fichiers de configuration sensibles
+config_local.php
+.env
+.env.local
+/controlleur/logger.php
+/controlleur/backup_manager.php
+/vue/log_viewer.php
