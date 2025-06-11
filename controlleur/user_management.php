@@ -14,16 +14,14 @@ function createApprenti($data) {
     try {
         // Hasher le mot de passe
         $hashedPassword = hashPassword($data['mot_de_passe']);
-        
-        $stmt = $pdo->prepare("INSERT INTO apprenti (Nom, Prenom, Mail, Mot_de_passe, classe) 
+          $stmt = $pdo->prepare("INSERT INTO apprenti (Nom, Prenom, Mail, Mot_de_passe, Promotion) 
                                VALUES (?, ?, ?, ?, ?)");
-        
-        $stmt->execute([
+          $stmt->execute([
             $data['nom'],
             $data['prenom'],
             $data['mail'],
             $hashedPassword,
-            $data['classe']
+            (int)$data['promotion']  // Conversion explicite en entier
         ]);
         
         return $pdo->lastInsertId();

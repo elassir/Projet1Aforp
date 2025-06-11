@@ -5,11 +5,10 @@ include_once '../controlleur/user_management.php';
 $success = false;
 $error = null;
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Vérifier que tous les champs requis sont présents
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {    // Vérifier que tous les champs requis sont présents
     if (empty($_POST['nom']) || empty($_POST['prenom']) || empty($_POST['mail']) || 
         empty($_POST['mot_de_passe']) || empty($_POST['confirm_mot_de_passe']) || 
-        empty($_POST['classe'])) {
+        empty($_POST['promotion'])) {
         $error = "Tous les champs sont obligatoires";
     } 
     // Vérifier que les mots de passe correspondent
@@ -22,14 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute([$_POST['mail']]);
         if ($stmt->fetchColumn() > 0) {
             $error = "Cet email est déjà utilisé";
-        } else {
-            // Créer l'apprenti
+        } else {            // Créer l'apprenti
             $data = [
                 'nom' => $_POST['nom'],
                 'prenom' => $_POST['prenom'],
                 'mail' => $_POST['mail'],
                 'mot_de_passe' => $_POST['mot_de_passe'],
-                'classe' => $_POST['classe']
+                'promotion' => $_POST['promotion']
             ];
             
             $apprentiId = createApprenti($data);
@@ -81,11 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="input-group">
                         <label for="mail">Email :</label>
                         <input type="email" id="mail" name="mail" required>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="classe">Classe :</label>
-                        <input type="text" id="classe" name="classe" required>
+                    </div>                      <div class="input-group">
+                        <label for="promotion">Promotion :</label>
+                        <input type="number" id="promotion" name="promotion" min="1" required>
                     </div>
                     
                     <div class="input-group">

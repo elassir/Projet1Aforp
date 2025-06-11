@@ -12,14 +12,14 @@
 
 /* Styles généraux */
 body {
-    color: #fff; /* Texte blanc pour contraster avec le fond */
+    color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     text-align: center;
-    overflow: hidden; /* Empêcher les barres de défilement dues à l'animation de fond */
+    overflow: hidden;
 }
 
 /* Section héroïque avec image de fond */
@@ -27,12 +27,12 @@ body {
     position: relative;
     width: 100%;
     height: 100vh;
-    background-image: url('../uploads/pic04.jpg'); /* Assurez-vous que cette image existe */
+    background-image: url('../uploads/pic04.jpg');
     background-size: cover;
     background-position: center center;
     display: flex;
     align-items: stretch;
-    justify-content: space-between; /* Distribue l'espace équitablement */
+    justify-content: space-between;
 }
 
 /* @keyframes backgroundScroll { ... } supprimé pour image statique */
@@ -48,17 +48,17 @@ body {
 }
 
 .container {
-    position: relative; /* Pour que le contenu soit au-dessus de l'overlay */
+    position: relative;
     z-index: 2;
-    background-color: rgba(255, 255, 255, 0.85); /* Fond blanc plus opaque */
+    background-color: rgba(255, 255, 255, 0.85);
     padding: 50px;
     border-radius: 20px;
     box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
     width: 100%;
     max-width: 550px;
-    margin-left: 50px; /* Espace entre la sidebar et le contenu principal */
-    -webkit-backdrop-filter: blur(15px); /* Support pour Safari */
-    backdrop-filter: blur(15px); /* Effet de flou pour le fond du conteneur */
+    margin-left: 50px;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
     border: 2px solid rgba(59, 130, 246, 0.3);
 }
 
@@ -151,17 +151,17 @@ p {
         padding: 20px;
         border-left: none;
         border-top: 2px solid rgba(255, 255, 255, 0.3);
-        order: 2; /* Sur mobile, la sidebar reste en bas */
+        order: 2;
     }
     
     .container {
         margin: 20px auto;
         max-width: 90%;
-        order: 1; /* Sur mobile, le contenu reste en haut */
+        order: 1;
     }
     
     .auth-cards {
-        flex-direction: column; /* Garde les cartes empilées sur mobile aussi */
+        flex-direction: column;
         flex-wrap: nowrap;
         justify-content: center;
     }
@@ -170,13 +170,95 @@ p {
         width: 100%;
         min-width: auto;
     }
+    
+    /* Formulaires - conserver les améliorations */
+    .login-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        min-height: 100vh;
+    }
+    
+    .form-section {
+        max-width: 100%;
+        min-width: auto;
+        margin: 5px;
+        padding: 20px;
+        max-height: none;
+        width: 100%;
+    }
+    
+    .image-section {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    .login-logo {
+        width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 20px auto;
+        max-width: 90%;
+        padding: 30px;
+    }
+    
+    /* Formulaires - conserver les améliorations */
+    .form-section {
+        padding: 15px;
+        margin: 0;
+        width: 100%;
+    }
+    
+    .login-container {
+        padding: 5px;
+    }
+    
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="password"],
+    form input[type="date"],
+    form input[type="file"],
+    form textarea,
+    form select {
+        padding: 10px;
+        margin-bottom: 12px;
+        min-height: 40px;
+        font-size: 16px;
+    }
+    
+    .form-section h1 {
+        font-size: 1.8em;
+    }
+    
+    .btn,
+    form button {
+        padding: 12px;
+        font-size: 1em;
+    }
+    
+    .sidebar {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 2.2em;
+    }
+    
+    p {
+        font-size: 1.1em;
+    }
 }
 
 /* Formulaire de connexion */
 form {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
 }
 
 form label {
@@ -192,21 +274,24 @@ form input[type="date"],
 form input[type="file"],
 form textarea,
 form select {
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     width: 100%;
+    box-sizing: border-box;
+    min-height: 45px;
 }
 
 /* Mise en page des formulaires de connexion */
 .login-container {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     min-height: 100vh;
     background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
     padding: 20px;
+    overflow-y: auto;
 }
 .image-section {
     flex: 1;
@@ -220,15 +305,20 @@ form select {
 .form-section {
     flex: 1;
     max-width: 420px;
+    min-width: 300px;
     background-color: rgba(255, 255, 255, 0.95);
-    padding: 40px;
+    padding: 30px;
     border-radius: 20px;
     box-shadow: 0 15px 40px rgba(59, 130, 246, 0.3);
     -webkit-backdrop-filter: blur(15px);
     backdrop-filter: blur(15px);
     color: #1e3a8a;
     border: 2px solid rgba(59, 130, 246, 0.2);
+    margin: 10px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
 }
+
 .form-section h1 {
     margin-bottom: 25px;
     color: #1e3a8a;
@@ -534,14 +624,14 @@ form button:hover {
     z-index: 2;
     width: 320px;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.85); /* Fond blanc plus opaque */
+    background-color: rgba(255, 255, 255, 0.85);
     padding: 40px 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     box-shadow: -8px 0 20px rgba(59, 130, 246, 0.15);
     border-left: 2px solid rgba(59, 130, 246, 0.3);
-    order: 2; /* Place la sidebar après le contenu principal */
+    order: 2;
     -webkit-backdrop-filter: blur(15px);
     backdrop-filter: blur(15px);
 }
@@ -561,5 +651,5 @@ form button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    order: 1; /* Place le contenu principal avant la sidebar */
+    order: 1;
 }

@@ -67,11 +67,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php if (isset($error)): ?>
                 <p class="error"><?= htmlspecialchars($error) ?></p>
             <?php endif; ?>            <form action="login_apprenti.php" method="POST">
-                <label for="mail">Email :</label>
-                <input type="email" id="mail" name="mail" required>
-                <label for="mot_de_passe">Mot de passe :</label>
-                <input type="password" id="mot_de_passe" name="mot_de_passe" required>
-                <button type="submit">Se connecter</button>
+                <div class="input-group">
+                    <label for="mail">Email :</label>
+                    <input type="email" id="mail" name="mail" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="mot_de_passe">Mot de passe :</label>
+                    <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+                </div>
+                
+                <button type="submit" class="btn">Se connecter</button>
             </form>
             <p>Pas encore inscrit ? <a href="../controlleur/register_apprenti.php">Créer un compte</a></p>
         </div>
