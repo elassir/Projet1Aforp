@@ -3,7 +3,9 @@ include_once '../controlleur/connexion.php';
 include_once '../model/systeme.php';
 include_once '../model/systemeRepository.php';
 
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
     $Nom = $_POST['Nom'];
     $date_derniere_mise_a_jour = $_POST['date_mise_a_jour'];
     $Numero_de_serie = $_POST['Numero_de_serie'];
@@ -14,13 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $image_systeme = $_FILES['image_systeme'];
     $image_path = null;
     if ($image_systeme && $image_systeme['error'] == 0) {
+        echo "<h2>TEST Ajout d'un nouveau système</h2>";
         $target_dir = "../uploads/";
         $target_file = $target_dir . basename($image_systeme['name']);
         if (move_uploaded_file($image_systeme['tmp_name'], $target_file)) {
             $image_path = basename($image_systeme['name']);
         }
     }
-
+    
     $systeme = new Systeme(
         $Nom, 
         $date_derniere_mise_a_jour,  
@@ -30,15 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $Date_fabrication, 
         $Description
     );
-
+    
     $systemeRepository = new SystemeRepository($pdo);
     $systemeRepository->save($systeme);
 
     echo "<p>Le système a été ajouté avec succès. Vous allez être redirigé dans quelques secondes...</p>";
-    echo "<script>
-            setTimeout(function() {
-                window.location.href = '../vue/gestion_systemes.php';
-            }, 3000);
-          </script>";
+    
 }
+
+
 ?>
