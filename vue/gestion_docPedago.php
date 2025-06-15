@@ -30,6 +30,8 @@ include_once '../model/DocumentPedago.php';            // Classe représentant u
 include_once '../model/DocumentPedagoRepository.php';  // Classe pour interagir avec la table des documents pédagogiques
 include_once '../model/Matiere.php';                   // Classe représentant une matière d'enseignement 
 include_once '../model/MatiereRepository.php';         // Classe pour interagir avec la table des matières
+include_once '../model/systeme.php';                   // Classe représentant un système technique
+include_once '../model/SystemeRepository.php';         // Classe pour interagir avec la table des systèmes
 include_once '../controlleur/enregistrerDocPedago.php'; // Code de traitement pour l'ajout de documents
 
 // Récupère l'ID du système concerné depuis l'URL, si disponible
@@ -99,10 +101,25 @@ $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne']
                     }
                     ?>
                 </select>
-                
-                <!-- Champ de saisie pour le système concerné par le document -->
+                  <!-- Liste déroulante pour choisir le système concerné par le document -->
                 <label for="Systeme_concerne">Système concerné :</label>
-                <input type="text" id="Systeme_concerne" name="Systeme_concerne" required>
+                <select id="Systeme_concerne" name="Systeme_concerne" required>
+                    <?php
+                    // Crée un objet qui permet d'accéder aux systèmes en base de données
+                    $systemeRepository = new SystemeRepository($pdo);
+                    
+                    // Récupère tous les systèmes disponibles
+                    $systemes = $systemeRepository->findAll();
+                    
+                    // Génère une option dans le menu déroulant pour chaque système
+                    foreach ($systemes as $systeme) {
+                        // La valeur envoyée sera l'ID du système, et l'utilisateur voit le nom du système
+                        echo "<option value='{$systeme->getIdSysteme()}'" . 
+                             (isset($systeme_concerne) && $systeme_concerne == $systeme->getIdSysteme() ? ' selected' : '') . 
+                             ">{$systeme->getNomDuSysteme()}</option>";
+                    }
+                    ?>
+                </select>
                 
                 <!-- Sélecteur de date pour indiquer la date du document -->
                 <label for="Date_Document">Date du document :</label>

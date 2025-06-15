@@ -20,6 +20,8 @@ if (!isset($_SESSION['user'])) {
 include_once '../controlleur/connexion.php';
 include_once '../model/DocumentTechnique.php';
 include_once '../model/DocumentTechniqueRepository.php';
+include_once '../model/systeme.php';
+include_once '../model/SystemeRepository.php';
 include_once '../controlleur/enregistrerDocTec.php'; // Contrôleur pour enregistrer les documents techniques
 
 // Récupère l'ID du système concerné depuis l'URL, si disponible
@@ -77,10 +79,25 @@ if (isset($message)) {
                     <option value="Notices">Notices</option>
                     <option value="Schema technique">Schema technique</option>
                 </select>
-                
-                <!-- Champ pour le système concerné par le document -->
+                  <!-- Liste déroulante pour choisir le système concerné par le document -->
                 <label for="Systeme_concerne">Système concerné :</label>
-                <input type="text" id="Systeme_concerne" name="Systeme_concerne" required>
+                <select id="Systeme_concerne" name="Systeme_concerne" required>
+                    <?php
+                    // Crée un objet qui permet d'accéder aux systèmes en base de données
+                    $systemeRepository = new SystemeRepository($pdo);
+                    
+                    // Récupère tous les systèmes disponibles
+                    $systemes = $systemeRepository->findAll();
+                    
+                    // Génère une option dans le menu déroulant pour chaque système
+                    foreach ($systemes as $systeme) {
+                        // La valeur envoyée sera l'ID du système, et l'utilisateur voit le nom du système
+                        echo "<option value='{$systeme->getIdSysteme()}'" . 
+                             (isset($systeme_concerne) && $systeme_concerne == $systeme->getIdSysteme() ? ' selected' : '') . 
+                             ">{$systeme->getNomDuSysteme()}</option>";
+                    }
+                    ?>
+                </select>
                 
                 <!-- Champ pour télécharger le fichier du document -->
                 <label for="Doc_file">Fichier du document :</label>
