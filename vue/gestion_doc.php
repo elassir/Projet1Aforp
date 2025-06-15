@@ -1,17 +1,21 @@
 <?php
+// Démarre la session pour maintenir l'état de connexion de l'utilisateur
 session_start();
+// Vérifie si l'utilisateur est connecté, sinon le redirige vers la page d'accueil
 if (!isset($_SESSION['user'])) {
     header('Location: ../vue/index.php');
     exit;
 }
+// Inclut les fichiers nécessaires pour la connexion à la base de données et les classes des objets
 include_once '../controlleur/connexion.php';
 include_once '../model/DocumentTechnique.php';
 include_once '../model/DocumentTechniqueRepository.php';
-include_once '../controlleur/enregistrerDocTec.php'; // Assurez-vous que ce chemin est correct
+include_once '../controlleur/enregistrerDocTec.php'; // Contrôleur pour enregistrer les documents techniques
 
+// Récupère l'ID du système concerné depuis l'URL, si disponible
 $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne'] : null;
 
-// Affiche les messages de succès ou d'erreur, le cas échéant
+// Affiche les messages de succès ou d'erreur si présents
 if (isset($message)) {
     echo "<p class='message'>$message</p>";
 }
@@ -25,7 +29,7 @@ if (isset($message)) {
     <title>Gestion des Documents Techniques</title>
     <link rel="stylesheet" href="gestion_doc.css">
     <script>
-        // Affiche ou masque la section d'ajout de document technique
+        // Fonction JavaScript pour afficher ou masquer la section d'ajout de document technique
         function toggleAddDocSection() {
             const section = document.getElementById('ajout-doc-technique');
             section.style.display = section.style.display === 'none' ? 'block' : 'none';
@@ -34,18 +38,28 @@ if (isset($message)) {
 </head>
 <body>
     <h1>Gestion des Documents Techniques</h1>
+    <!-- Bouton de déconnexion -->
     <button onclick="window.location.href='../controlleur/logout.php'" class="logout-button">Déconnexion</button>
+    
     <?php if ($_SESSION['role'] === 'formateur'): ?>
-        <!-- Bouton pour afficher le formulaire d'ajout de document technique -->
+        <!-- Cette section est visible uniquement pour les formateurs -->
+        
+        <!-- Bouton pour afficher/masquer le formulaire d'ajout de document technique -->
         <button onclick="toggleAddDocSection()" class="add-button">Ajouter un Document Technique</button>
-        <!-- Formulaire d'ajout de document technique masqué par défaut -->
+        
+        <!-- Formulaire d'ajout de document technique (masqué par défaut) -->
         <section id="ajout-doc-technique" style="display: none;">
             <h2>Ajouter un Nouveau Document Technique</h2>
             <form action="../controlleur/enregistrerDocTec.php" method="POST" enctype="multipart/form-data">
+                <!-- Champ pour le nom du document -->
                 <label for="Nom_doc_tech">Nom du document :</label>
                 <input type="text" id="Nom_doc_tech" name="Nom_doc_tech" required>
+                
+                <!-- Champ pour la date du document -->
                 <label for="Date">Date :</label>
                 <input type="date" id="Date" name="Date" required>
+                
+                <!-- Liste déroulante pour choisir la catégorie du document -->
                 <label for="Categorie">Catégorie :</label>
                 <select id="Categorie" name="Categorie" required>
                     <option value="Presentation">Presentation</option>
@@ -53,28 +67,40 @@ if (isset($message)) {
                     <option value="Notices">Notices</option>
                     <option value="Schema technique">Schema technique</option>
                 </select>
+                
+                <!-- Champ pour le système concerné par le document -->
                 <label for="Systeme_concerne">Système concerné :</label>
                 <input type="text" id="Systeme_concerne" name="Systeme_concerne" required>
+                
+                <!-- Champ pour télécharger le fichier du document -->
                 <label for="Doc_file">Fichier du document :</label>
                 <input type="file" id="Doc_file" name="Doc_file" accept=".pdf,.doc,.docx" required>
+                
+                <!-- Champ pour la version du document -->
                 <label for="Version">Version :</label>
                 <input type="text" id="Version" name="Version" required>
+                
                 <button type="submit">Ajouter le Document Technique</button>
             </form>
         </section>
     <?php endif; ?>
-    <!-- Liste des documents techniques existants -->
+    
+    <!-- Section listant tous les documents techniques -->
     <section id="liste-docs-techniques">
         <h2>Liste des Documents Techniques</h2>
         <div class="docs-techniques-container">
             <?php
+            // Récupère les documents techniques selon le système concerné
             $documentTechniqueRepository = new DocumentTechniqueRepository($pdo);
             if ($systeme_concerne) {
+                // Si un système est spécifié, ne récupère que les documents de ce système
                 $documents = $documentTechniqueRepository->findBySysteme($systeme_concerne);
             } else {
+                // Sinon, récupère tous les documents
                 $documents = $documentTechniqueRepository->findAll();
             }
-            // Trier les documents par catégorie
+            
+            // Trie les documents par catégorie
             $categories = [
                 'Presentation' => [],
                 'Annexes' => [],
@@ -90,10 +116,12 @@ if (isset($message)) {
                     <div class="column">
                         <h3><?= htmlspecialchars($category); ?></h3>
                         <?php foreach ($docs as $doc): ?>
+                            <!-- Carte pour chaque document technique -->
                             <div class="doc-technique-card">
                                 <h4><?= htmlspecialchars($doc->getNom_doc_tech()); ?></h4>
                                 <p><strong>Date :</strong> <?= htmlspecialchars($doc->getDate()); ?></p>
                                 <p><strong>Version :</strong> <?= htmlspecialchars($doc->getVersion()); ?></p>
+                                <!-- Lien pour visualiser le document -->
                                 <a href="../uploads/<?= htmlspecialchars($doc->getDocFile()); ?>" target="_self">Voir le document</a>
                             </div>
                         <?php endforeach; ?>

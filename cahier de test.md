@@ -74,3 +74,4 @@ Le but de ce cahier de tests est de vérifier que l'application répond aux exig
 - **Ergonomie** : L'interface utilisateur doit être claire, intuitive et respecter la charte graphique.  
 - **Sécurité** : Les utilisateurs doivent avoir accès uniquement aux fonctionnalités de leur rôle.  
 - **Performance** : Les temps de réponse doivent être inférieurs à 2 secondes pour les actions principales.  
+
