@@ -68,9 +68,7 @@ class SystemeRepository {
             // Remonte l'exception pour qu'elle puisse être gérée plus haut
             throw $e;
         }
-    }
-
-    // Méthode pour récupérer tous les systèmes de la base de données
+    }    // Méthode pour récupérer tous les systèmes de la base de données
     public function findAll() {
         // Exécute une requête pour récupérer tous les systèmes
         $stmt = $this->pdo->query("SELECT * FROM systeme");
@@ -92,6 +90,38 @@ class SystemeRepository {
         
         // Retourne tous les systèmes trouvés
         return $systemes;
+    }
+    
+    /**
+     * Recherche un système par son ID
+     * 
+     * @param int $id_systeme L'ID du système recherché
+     * @return Systeme|null Le système trouvé ou null si aucun système ne correspond
+     */
+    public function findById($id_systeme) {
+        // Prépare et exécute une requête pour trouver un système par son ID
+        $stmt = $this->pdo->prepare("SELECT * FROM systeme WHERE id_systeme = ?");
+        $stmt->execute([$id_systeme]);
+        
+        // Récupère le premier résultat
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Si aucun résultat n'est trouvé, retourne null
+        if ($row === false) {
+            return null;
+        }
+        
+        // Crée et retourne un objet Systeme avec les données trouvées
+        return new Systeme(
+            $row['Nom_du_systeme'],
+            $row['date_derniere_mise_a_jour'],
+            $row['image_systeme'],
+            $row['Numero_de_serie'],
+            $row['Fabriquant'],
+            $row['Date_fabrication'],
+            $row['Description'],
+            $row['id_systeme']
+        );
     }
 }
 ?>

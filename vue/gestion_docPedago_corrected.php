@@ -163,38 +163,8 @@ $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne']
                                     <?php if ($_SESSION['role'] === 'formateur'): ?>
                                         <p class="doc-status">Devoirs rendus: <span class="badge"><?= $nbDevoirs ?></span></p>
                                     <?php endif; ?>
-                                </div>                                <a href="../uploads/<?= htmlspecialchars($consigne->getDocFile()) ?>" target="_blank" class="btn-view">Voir le document</a>
-                                
-                                <?php if ($_SESSION['role'] === 'apprenti'): ?>                                    <?php 
-                                    // Vérifier si l'apprenti a déjà soumis un devoir pour cette consigne
-                                    $devoir = $documentPedagoRepository->getDevoirByApprentiForConsigne($_SESSION['user']['id_apprenti'], $consigne->getIdPedagogique());
-                                    
-                                    if ($devoir): 
-                                        $nomFichierDevoir = basename($devoir->getDocFile());
-                                    ?>
-                                        <div class="devoir-status submitted">
-                                            <p>✓ Vous avez déjà rendu un devoir pour cette consigne</p>
-                                            <p class="devoir-file">
-                                                <span class="file-badge">Votre fichier :</span> 
-                                                <a href="../uploads/<?= htmlspecialchars($devoir->getDocFile()) ?>" target="_blank"><?= htmlspecialchars($nomFichierDevoir) ?></a>
-                                            </p>
-                                        </div>
-                                    <?php else: ?>
-                                        <div class="submit-devoir">
-                                            <button class="btn-submit-devoir" onclick="toggleDevoirForm(<?= $consigne->getIdPedagogique() ?>)">Rendre un devoir</button>
-                                            
-                                            <form id="devoir-form-<?= $consigne->getIdPedagogique() ?>" class="devoir-form" action="../controlleur/enregistrerDevoirApprenti.php" method="POST" enctype="multipart/form-data" style="display: none;">
-                                                <input type="hidden" name="consigne_id" value="<?= $consigne->getIdPedagogique() ?>">
-                                                <div class="form-group">
-                                                    <label for="Doc_file-<?= $consigne->getIdPedagogique() ?>">Fichier du devoir :</label>
-                                                    <input type="file" id="Doc_file-<?= $consigne->getIdPedagogique() ?>" name="Doc_file" required>
-                                                </div>
-                                                <button type="submit" class="btn-upload">Envoyer le devoir</button>
-                                                <button type="button" onclick="toggleDevoirForm(<?= $consigne->getIdPedagogique() ?>)" class="btn-cancel">Annuler</button>
-                                            </form>
-                                        </div>
-                                    <?php endif; ?>
-                                <?php endif; ?>
+                                </div>
+                                <a href="../uploads/<?= htmlspecialchars($consigne->getDocFile()) ?>" target="_blank" class="btn-view">Voir le document</a>
                                 
                                 <?php if ($_SESSION['role'] === 'formateur' && $nbDevoirs > 0): ?>
                                     <div style="text-align: center; padding: 10px;">

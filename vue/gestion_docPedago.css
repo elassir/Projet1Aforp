@@ -1,0 +1,372 @@
+/* Styles spécifiques pour la gestion des documents pédagogiques */
+
+/* Conteneur principal des documents */
+.docs-pedagogiques-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+
+/* Styles pour les sections consignes et devoirs */
+.section-consignes, .section-devoirs {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-consignes {
+    border-left: 5px solid #3498db;
+}
+
+.section-devoirs {
+    border-left: 5px solid #2ecc71;
+}
+
+/* Titre des sections */
+.section-consignes h3, .section-devoirs h3 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+.section-consignes h3 {
+    color: #3498db;
+}
+
+.section-devoirs h3 {
+    color: #2ecc71;
+}
+
+/* Grille pour afficher les cartes de documents */
+.doc-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Style des cartes de documents */
+.doc-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.doc-card:hover {
+    transform: translateY(-5px);
+}
+
+.consigne-card {
+    border-top: 4px solid #3498db;
+}
+
+.devoir-card {
+    border-top: 4px solid #2ecc71;
+}
+
+/* En-tête de la carte avec icône et informations */
+.doc-info {
+    padding: 15px;
+    flex-grow: 1;
+}
+
+.doc-icon {
+    font-size: 24px;
+    padding: 15px;
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+/* Titre du document (nom du fichier) */
+.doc-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #444;
+    word-break: break-word;
+}
+
+/* Infos du document (date, système, matière) */
+.doc-date, .doc-system, .doc-matiere, .doc-status, .doc-author {
+    font-size: 0.9rem;
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Bouton pour voir le document */
+.btn-view {
+    display: block;
+    padding: 10px;
+    text-align: center;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.btn-view:hover {
+    background-color: #2980b9;
+}
+
+/* Section pour les apprentis associés à un document */
+.apprentis-container {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 0 0 8px 8px;
+    border-top: 1px solid #eee;
+}
+
+.apprentis-container h5 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.apprentis-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.apprentis-list li {
+    padding: 8px 12px;
+    margin-bottom: 5px;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Badge pour la promotion */
+.promotion-badge {
+    background-color: #3498db;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+}
+
+/* Badge pour le nombre de devoirs rendus */
+.badge {
+    background-color: #e74c3c;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/* Mise en évidence pour les fichiers */
+.file-name {
+    font-weight: bold;
+    color: #333;
+    background-color: #f2f2f2;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: inline-block;
+    word-break: break-all;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-left: 3px solid #3498db;
+}
+
+/* Message quand aucun document n'est disponible */
+.no-document {
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    text-align: center;
+    color: #777;
+}
+
+/* Groupe de consignes */
+.consigne-group {
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.consigne-header {
+    background-color: #f2f7fb;
+    padding: 12px 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.consigne-header h4 {
+    margin: 0;
+    color: #3498db;
+}
+
+.consigne-content {
+    padding: 15px;
+    background-color: white;
+}
+
+.devoirs-rendus {
+    margin-top: 15px;
+}
+
+.devoirs-rendus-toggle {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* Styles pour le filtre par système */
+.filter-section {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-section label {
+    font-weight: bold;
+    color: #333;
+}
+
+.filter-section select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+/* Styles pour le formulaire d'envoi de devoir */
+.submit-devoir {
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid #eee;
+}
+
+.btn-submit-devoir {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.btn-submit-devoir:hover {
+    background-color: #2980b9;
+}
+
+.devoir-form {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.btn-upload {
+    padding: 8px 15px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.btn-upload:hover {
+    background-color: #219955;
+}
+
+.btn-cancel {
+    padding: 8px 15px;
+    background-color: #95a5a6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-cancel:hover {
+    background-color: #7f8c8d;
+}
+
+/* Styles pour l'indicateur de statut de devoir */
+.devoir-status {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.devoir-status.submitted {
+    background-color: #dff0d8;
+    color: #3c763d;
+    border: 1px solid #d6e9c6;
+}
+
+/* Style pour le nom de fichier du devoir soumis */
+.devoir-file {
+    margin-top: 8px;
+    font-size: 0.9em;
+}
+
+.devoir-file a {
+    color: #3498db;
+    text-decoration: underline;
+}
+
+.devoir-file a:hover {
+    text-decoration: none;
+}
+
+.file-badge {
+    background-color: #f2f2f2;
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: #555;
+    font-size: 0.85em;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .doc-cards {
+        grid-template-columns: 1fr;
+    }
+}
