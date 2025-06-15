@@ -243,5 +243,46 @@ class DocumentPedagoRepository {
             $row['id_matiere']
         );
     }
+    
+    /**
+     * Compte le nombre d'apprentis ayant rendu un devoir pour une consigne spécifique
+     * 
+     * @param int $consigne_id ID de la consigne
+     * @return int Nombre d'apprentis
+     */
+    public function countApprentisForConsigne($consigne_id) {
+        $stmt = $this->pdo->prepare("
+            SELECT COUNT(DISTINCT ad.Apprenti) 
+            FROM apprenti_devoir ad
+            JOIN document_pedagogique devoir ON ad.Devoir = devoir.id_pedagogique
+            WHERE devoir.Systeme_concerne = (SELECT Systeme_concerne FROM document_pedagogique WHERE id_pedagogique = ?)
+            AND devoir.id_matiere = (SELECT id_matiere FROM document_pedagogique WHERE id_pedagogique = ?)
+            AND devoir.Type_document = 'DEVOIR'
+        ");
+        $stmt->execute([$consigne_id, $consigne_id]);
+        return (int)$stmt->fetchColumn();
+    }
+    
+    /**
+     * Récupère la liste des apprentis ayant rendu un devoir pour une consigne spécifique
+     * 
+     * @param int $consigne_id ID de la consigne
+     * @return array Tableau d'informations sur les apprentis
+     */
+    public function getApprentisForConsigne($consigne_id) {
+        $stmt = $this->pdo->prepare("
+            SELECT a.id_apprenti, a.Nom, a.Prenom, a.Mail, a.Promotion,
+                   dp.id_pedagogique as devoir_id, dp.Doc_file
+            FROM apprenti a
+            JOIN apprenti_devoir ad ON a.id_apprenti = ad.Apprenti
+            JOIN document_pedagogique dp ON ad.Devoir = dp.id_pedagogique
+            WHERE dp.Systeme_concerne = (SELECT Systeme_concerne FROM document_pedagogique WHERE id_pedagogique = ?)
+            AND dp.id_matiere = (SELECT id_matiere FROM document_pedagogique WHERE id_pedagogique = ?)
+            AND dp.Type_document = 'DEVOIR'
+            ORDER BY a.Nom, a.Prenom
+        ");
+        $stmt->execute([$consigne_id, $consigne_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

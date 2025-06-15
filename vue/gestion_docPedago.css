@@ -144,6 +144,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 /* Badge pour la promotion */
@@ -362,6 +364,30 @@
     border-radius: 3px;
     color: #555;
     font-size: 0.85em;
+}
+
+/* Styles supplémentaires pour les devoirs rendus */
+.apprenti-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.devoir-link a {
+    background-color: #f8f9fa;
+    color: #0066cc;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    border: 1px solid #dee2e6;
+    transition: all 0.2s ease;
+}
+
+.devoir-link a:hover {
+    background-color: #e9ecef;
+    text-decoration: underline;
 }
 
 /* Responsive design */

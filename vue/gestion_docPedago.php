@@ -146,11 +146,10 @@ $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne']
                 <?php if (empty($consignes)): ?>
                     <p class="no-document">Aucune consigne disponible</p>
                 <?php else: ?>
-                    <div class="doc-cards">
-                        <?php foreach ($consignes as $consigne): 
+                    <div class="doc-cards">                        <?php foreach ($consignes as $consigne): 
                             $systeme = $systemeRepository->findById($consigne->getSystemeConcerne());
                             $matiere = $matiereRepository->findById($consigne->getIdMatiere());
-                            $nbDevoirs = ($_SESSION['role'] === 'formateur') ? $documentPedagoRepository->countApprentisForDevoir($consigne->getIdPedagogique()) : 0;
+                            $nbDevoirs = ($_SESSION['role'] === 'formateur') ? $documentPedagoRepository->countApprentisForConsigne($consigne->getIdPedagogique()) : 0;
                             $nomFichier = basename($consigne->getDocFile());
                         ?>
                             <div class="doc-card consigne-card" data-system="<?= $systeme ? $systeme->getIdSysteme() : '0' ?>">
@@ -207,12 +206,18 @@ $systeme_concerne = isset($_GET['systeme_concerne']) ? $_GET['systeme_concerne']
                                         <h5>Apprentis ayant rendu ce devoir:</h5>
                                         <ul class="apprentis-list">
                                             <?php 
-                                            $apprentis = $documentPedagoRepository->getApprentisForDevoir($consigne->getIdPedagogique());
+                                            $apprentis = $documentPedagoRepository->getApprentisForConsigne($consigne->getIdPedagogique());
                                             foreach ($apprentis as $apprenti): 
-                                            ?>
-                                                <li>
-                                                    <?= htmlspecialchars($apprenti['Nom'] . ' ' . $apprenti['Prenom']) ?> 
-                                                    <span class="promotion-badge">Promotion: <?= htmlspecialchars($apprenti['Promotion']) ?></span>
+                                            ?>                                                <li>
+                                                    <div class="apprenti-info">
+                                                        <strong><?= htmlspecialchars($apprenti['Nom'] . ' ' . $apprenti['Prenom']) ?></strong>
+                                                        <span class="promotion-badge">Promotion: <?= htmlspecialchars($apprenti['Promotion']) ?></span>
+                                                    </div>
+                                                    <div class="devoir-link">
+                                                        <a href="../uploads/<?= htmlspecialchars($apprenti['Doc_file']) ?>" target="_blank">
+                                                            <?= htmlspecialchars(basename($apprenti['Doc_file'])) ?>
+                                                        </a>
+                                                    </div>
                                                 </li>
                                             <?php endforeach; ?>
                                         </ul>
