@@ -1,6 +1,7 @@
 <?php
 include_once '../controlleur/connexion.php';
 include_once '../controlleur/user_management.php';
+include_once '../controlleur/password_utils.php'; // Pour vérifier la complexité du mot de passe
 
 $success = false;
 $error = null;
@@ -14,6 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Vérifier que les mots de passe correspondent
     elseif ($_POST['mot_de_passe'] !== $_POST['confirm_mot_de_passe']) {
         $error = "Les mots de passe ne correspondent pas";
+    }
+    // Vérifier la complexité du mot de passe
+    elseif (($passwordError = validatePasswordStrength($_POST['mot_de_passe'])) !== true) {
+        $error = $passwordError;
     } 
     // Vérifier que l'email n'existe pas déjà
     else {

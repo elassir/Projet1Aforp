@@ -3,8 +3,17 @@ session_start();
 include_once '../controlleur/connexion.php';
 include_once '../controlleur/password_utils.php';
 include_once '../controlleur/user_management.php';
+include_once '../controlleur/fail2ban.php';  // Inclusion du système fail2ban
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// Vérifier si l'adresse IP est bloquée
+$ip = $_SERVER['REMOTE_ADDR'];
+$blockStatus = isIpBlocked($ip);
+
+if ($blockStatus['is_blocked']) {
+    $remainingMinutes = ceil($blockStatus['remaining_time'] / 60);
+    $error = "Trop de tentatives de connexion. Veuillez réessayer dans {$remainingMinutes} minutes.";
+} 
+elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $mail = $_POST['mail'];
     $mot_de_passe = $_POST['mot_de_passe'];
 
@@ -31,15 +40,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         if ($authenticated) {
+            // Réinitialiser les tentatives de connexion
+            resetAttempts($ip);
+            
             $_SESSION['user'] = $formateur;
             $_SESSION['role'] = 'formateur';
+            $_SESSION['last_activity'] = time();  // Enregistre le moment de la connexion pour la gestion de session
             header('Location: ../vue/gestion_systemes.php');
             exit;
+        } else {
+            // Enregistrer la tentative échouée
+            recordFailedAttempt($ip);
         }
+    } else {
+        // Enregistrer la tentative échouée même si l'email n'existe pas
+        recordFailedAttempt($ip);
     }
     
     // Si nous arrivons ici, l'authentification a échoué
     $error = "Identifiants incorrects";
+    
+    // Afficher le nombre de tentatives restantes si l'IP commence à accumuler des échecs
+    if ($blockStatus['attempts'] > 0) {
+        $remaining = MAX_LOGIN_ATTEMPTS - $blockStatus['attempts'];
+        if ($remaining > 0) {
+            $error .= ". Il vous reste {$remaining} tentative(s) avant blocage temporaire.";
+        }
+    }
 }
 ?>
 

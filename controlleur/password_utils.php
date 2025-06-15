@@ -9,6 +9,34 @@
  */
 
 /**
+ * Vérifie si un mot de passe respecte les critères de complexité
+ * - Au moins 8 caractères
+ * - Au moins 1 lettre majuscule
+ * - Au moins 1 chiffre
+ * 
+ * @param string $password Mot de passe à vérifier
+ * @return bool|string True si valide, message d'erreur sinon
+ */
+function validatePasswordStrength($password) {
+    // Vérification de la longueur minimale
+    if (strlen($password) < 8) {
+        return "Le mot de passe doit contenir au moins 8 caractères";
+    }
+    
+    // Vérification de la présence d'au moins une lettre majuscule
+    if (!preg_match('/[A-Z]/', $password)) {
+        return "Le mot de passe doit contenir au moins une lettre majuscule";
+    }
+    
+    // Vérification de la présence d'au moins un chiffre
+    if (!preg_match('/[0-9]/', $password)) {
+        return "Le mot de passe doit contenir au moins un chiffre";
+    }
+    
+    return true;
+}
+
+/**
  * Hache un mot de passe de manière sécurisée
  * 
  * Cette fonction prend un mot de passe en texte brut et le transforme en une chaîne 

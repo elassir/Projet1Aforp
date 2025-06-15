@@ -14,6 +14,16 @@
 // Cette ligne permet d'accéder aux variables de session comme $_SESSION['user'] et $_SESSION['role']
 session_start();
 
+// Inclut le gestionnaire de session pour vérifier la validité de la session utilisateur
+include_once '../controlleur/session_manager.php';
+
+// Vérifie si la session est toujours valide (pas expirée)
+if (!isSessionValid()) {
+    // Redirige vers la page de connexion avec un message d'expiration
+    header('Location: ../vue/index.php?session_expired=1');
+    exit;
+}
+
 // Inclut les fichiers nécessaires pour le fonctionnement de la page
 include_once '../controlleur/connexion.php';           // Connexion à la base de données
 include_once '../model/DocumentPedago.php';            // Classe représentant un document pédagogique

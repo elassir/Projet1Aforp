@@ -1,6 +1,16 @@
 <?php
 // Démarre la session pour maintenir l'état de connexion de l'utilisateur
 session_start();
+// Inclut le gestionnaire de session
+include_once '../controlleur/session_manager.php';
+
+// Vérifie si la session est toujours valide (pas expirée)
+if (!isSessionValid()) {
+    // Redirige vers la page de connexion avec un message d'expiration
+    header('Location: ../vue/index.php?session_expired=1');
+    exit;
+}
+
 // Vérifie si l'utilisateur est connecté, sinon le redirige vers la page d'accueil
 if (!isset($_SESSION['user'])) {
     header('Location: ../vue/index.php');

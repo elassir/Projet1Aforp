@@ -20,9 +20,18 @@ session_start();
 include_once '../controlleur/connexion.php';      // Établit la connexion à la base de données
 include_once '../controlleur/password_utils.php'; // Fonctions de gestion des mots de passe
 include_once '../controlleur/user_management.php'; // Fonctions de gestion des utilisateurs
+include_once '../controlleur/fail2ban.php';      // Protection contre les attaques par force brute
 
+// Vérifier si l'adresse IP est bloquée
+$ip = $_SERVER['REMOTE_ADDR'];
+$blockStatus = isIpBlocked($ip);
+
+if ($blockStatus['is_blocked']) {
+    $remainingMinutes = ceil($blockStatus['remaining_time'] / 60);
+    $error = "Trop de tentatives de connexion. Veuillez réessayer dans {$remainingMinutes} minutes.";
+} 
 // Traitement du formulaire de connexion lorsqu'il est soumis
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Récupération des données du formulaire
     $mail = $_POST['mail'];                // Adresse e-mail saisie
     $mot_de_passe = $_POST['mot_de_passe']; // Mot de passe saisi
@@ -55,20 +64,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         // Si l'authentification a réussi (mot de passe correct)
         if ($authenticated) {
+            // Réinitialiser les tentatives de connexion échouées
+            resetAttempts($ip);
+            
             // Création des variables de session pour conserver les informations de l'utilisateur connecté
             $_SESSION['user'] = $apprenti;      // Stocke toutes les informations de l'apprenti
             $_SESSION['role'] = 'apprenti';     // Définit son rôle comme "apprenti"
+            $_SESSION['last_activity'] = time(); // Enregistre le moment de connexion pour la gestion de session
 
             // Redirection vers la page d'accueil des systèmes
             // La fonction header envoie une instruction au navigateur pour qu'il se rende à une autre page
             header('Location: ../vue/gestion_systemes.php');
             exit;  // Arrête l'exécution du script pour s'assurer que la redirection fonctionne
+        } else {
+            // Enregistrer la tentative de connexion échouée
+            recordFailedAttempt($ip);
         }
+    } else {
+        // Enregistrer la tentative de connexion échouée même si l'email n'existe pas
+        recordFailedAttempt($ip);
     }
     
     // Si l'authentification a échoué (e-mail non trouvé ou mot de passe incorrect)
     $error = "Identifiants incorrects";  // Message d'erreur qui sera affiché à l'utilisateur
-    // Note: pour des raisons de sécurité, on ne précise pas si c'est l'email ou le mot de passe qui est incorrect
+    
+    // Afficher le nombre de tentatives restantes si l'IP commence à accumuler des échecs
+    if ($blockStatus['attempts'] > 0) {
+        $remaining = MAX_LOGIN_ATTEMPTS - $blockStatus['attempts'];
+        if ($remaining > 0) {
+            $error .= ". Il vous reste {$remaining} tentative(s) avant blocage temporaire.";
+        }
+    }
 }
 ?>
 
